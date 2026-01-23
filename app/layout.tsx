@@ -15,7 +15,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>Vectra Budgeting App</title>
+        <title>
+          Vectra App | Track your expenses, income, and budget on the go
+        </title>
+        <meta
+          name="description"
+          content="Track your expenses, income, and budget on the go with Vectra App"
+        />
+        <meta
+          name="keywords"
+          content="budgeting app, expense tracker, budget planner, finance management, budgeting, expense tracking, budget planning, finance management, budgeting app, expense tracker, budget planner, finance management"
+        />
       </head>
       <body>
         <Toaster position="bottom-center" reverseOrder={false} />

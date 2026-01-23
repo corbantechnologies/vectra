@@ -1,9 +1,16 @@
 "use client";
 
-export default function PublicLayout({
+import Footer from "@/components/landing/Footer";
+
+export default function LandingLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return <div>{children}</div>;
+  return (
+    <div>
+      {children}
+      <Footer />
+    </div>
+  );
 }
