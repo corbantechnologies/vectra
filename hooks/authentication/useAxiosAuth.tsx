@@ -12,18 +12,21 @@ interface CustomSession extends Session {
 }
 
 function useAxiosAuth() {
-  const { data: session } = useSession() as { data: CustomSession };
+  const { data: session, status } = useSession() as {
+    data: CustomSession;
+    status: string;
+  };
 
-  const tokens = session?.user?.token;
+  const token = session?.user?.token;
 
   const authenticationHeader = {
     headers: {
-      Authorization: "Token " + tokens,
+      Authorization: token ? "Token " + token : "",
       "Content-Type": "multipart/form-data",
     },
   };
 
-  return authenticationHeader;
+  return { ...authenticationHeader, token, status };
 }
 
 export default useAxiosAuth;

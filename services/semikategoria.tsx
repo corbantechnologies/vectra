@@ -17,12 +17,12 @@ export interface SemiKategoria {
 
 interface createSemiKategoria {
   name: string;
-  kategoria: string;
+  kategoria: string; // the value is the reference of the category
 }
 
 interface updateSemiKategoria {
   name: string;
-  kategoria: string;
+  kategoria: string; // the value is the reference of the category
 }
 
 export async function createSemiKategoria(

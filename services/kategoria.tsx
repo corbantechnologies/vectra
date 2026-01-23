@@ -31,7 +31,7 @@ export async function createKategoria(
   header: { headers: { Authorization: string } },
 ) {
   const response: AxiosResponse<Kategoria> = await apiActions.post(
-    "api/v1/kategorias/",
+    "api/v1/kategoria/",
     kategoria,
     header,
   );
@@ -44,7 +44,7 @@ export async function updateKategoria(
   reference: string,
 ) {
   const response: AxiosResponse<Kategoria> = await apiActions.patch(
-    `api/v1/kategorias/${reference}/`,
+    `api/v1/kategoria/${reference}/`,
     kategoria,
     header,
   );
@@ -55,7 +55,7 @@ export const getKategorias = async (headers: {
   headers: { Authorization: string };
 }): Promise<Kategoria[]> => {
   const response: AxiosResponse<PaginatedResponse<Kategoria>> =
-    await apiActions.get(`/api/v1/kategorias/`, headers);
+    await apiActions.get(`/api/v1/kategoria/`, headers);
   return response.data.results || [];
 };
 
@@ -64,7 +64,7 @@ export const getKategoria = async (
   reference: string,
 ): Promise<Kategoria> => {
   const response: AxiosResponse<Kategoria> = await apiActions.get(
-    `/api/v1/kategorias/${reference}/`,
+    `/api/v1/kategoria/${reference}/`,
     headers,
   );
   return response.data;
@@ -75,7 +75,7 @@ export async function deleteKategoria(
   reference: string,
 ) {
   const response: AxiosResponse<Kategoria> = await apiActions.delete(
-    `api/v1/kategorias/${reference}/`,
+    `api/v1/kategoria/${reference}/`,
     header,
   );
   return response.data;

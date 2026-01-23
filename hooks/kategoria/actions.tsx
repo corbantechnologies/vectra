@@ -5,12 +5,12 @@ import useAxiosAuth from "../authentication/useAxiosAuth";
 import { getKategorias, getKategoria } from "@/services/kategoria";
 
 export function useFetchKategorias() {
-  const header = useAxiosAuth();
+  const { headers, token } = useAxiosAuth();
 
   return useQuery({
     queryKey: ["kategorias"],
-    queryFn: () => getKategorias(header),
-    enabled: true,
+    queryFn: () => getKategorias({ headers }),
+    enabled: !!token,
   });
 }
 

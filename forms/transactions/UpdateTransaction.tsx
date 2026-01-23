@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { transactionSchema, TransactionFormValues } from "@/lib/form-schemas";
-import { createTransaction } from "@/services/transactions";
+import { updateTransaction, Transaction } from "@/services/transactions";
 import { getKategoria, Kategoria } from "@/services/kategoria";
 import {
   TextField,
@@ -21,17 +21,17 @@ import {
 import { toast } from "react-hot-toast";
 import useAxiosAuth from "@/hooks/authentication/useAxiosAuth";
 
-interface CreateTransactionProps {
-  kategoriaReference: string;
+interface UpdateTransactionProps {
+  transaction: Transaction;
   onSuccess?: () => void;
   onCancel?: () => void;
 }
 
-export default function CreateTransaction({
-  kategoriaReference,
+export default function UpdateTransaction({
+  transaction,
   onSuccess,
   onCancel,
-}: CreateTransactionProps) {
+}: UpdateTransactionProps) {
   const [loading, setLoading] = useState(false);
   const [fetchingData, setFetchingData] = useState(true);
   const [kategoria, setKategoria] = useState<Kategoria | null>(null);
@@ -42,24 +42,22 @@ export default function CreateTransaction({
     handleSubmit,
     control,
     formState: { errors },
-    reset,
-    setValue,
   } = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
-      transaction_type: "EXP",
-      transaction_method: "CASH",
-      amount: "",
-      date: new Date().toISOString().split("T")[0],
-      kategoria: kategoriaReference,
-      semikategoria: "",
+      transaction_type: transaction.transaction_type as any,
+      transaction_method: transaction.transaction_method as any,
+      amount: transaction.amount,
+      date: transaction.date.split("T")[0],
+      kategoria: transaction.kategoria,
+      semikategoria: transaction.semikategoria || "",
     },
   });
 
   useEffect(() => {
     const fetchKategoria = async () => {
       try {
-        const data = await getKategoria(header, kategoriaReference);
+        const data = await getKategoria(header, transaction.kategoria);
         setKategoria(data);
       } catch (error) {
         toast.error("Failed to load category metadata.");
@@ -70,26 +68,18 @@ export default function CreateTransaction({
     if (header.headers.Authorization !== "Token undefined") {
       fetchKategoria();
     }
-  }, [kategoriaReference, header]);
+  }, [transaction.kategoria, header]);
 
   const onSubmit = async (data: TransactionFormValues) => {
     setLoading(true);
     try {
-      await createTransaction(data as any, header);
-      toast.success("Transaction recorded successfully!");
-      reset({
-        transaction_type: data.transaction_type,
-        transaction_method: data.transaction_method,
-        amount: "",
-        date: new Date().toISOString().split("T")[0],
-        kategoria: kategoriaReference,
-        semikategoria: "",
-      });
+      await updateTransaction(data as any, header, transaction.reference);
+      toast.success("Transaction updated successfully!");
       if (onSuccess) onSuccess();
     } catch (error: any) {
       toast.error(
         error.response?.data?.message ||
-          "Failed to record transaction. Please try again.",
+          "Failed to update transaction. Please try again.",
       );
     } finally {
       setLoading(false);
@@ -134,7 +124,6 @@ export default function CreateTransaction({
           label="Amount"
           variant="outlined"
           type="number"
-          placeholder="0.00"
           {...register("amount")}
           error={!!errors.amount}
           helperText={errors.amount?.message}
@@ -192,7 +181,7 @@ export default function CreateTransaction({
             </Button>
           )}
           <Button type="submit" variant="contained" disabled={loading}>
-            {loading ? "Recording..." : "Record Transaction"}
+            {loading ? "Updating..." : "Update Transaction"}
           </Button>
         </Box>
       </Stack>
