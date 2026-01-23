@@ -19,6 +19,15 @@ export interface User {
   is_staff: boolean;
 }
 
+export interface createUser {
+  email: string;
+  password: string;
+  password_confirmation: string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+}
+
 export interface forgotPassword {
   email: string;
 }
@@ -29,6 +38,14 @@ export interface resetPassword {
   password: string;
   password_confirmation: string;
 }
+
+export const createUser = async (data: createUser): Promise<any> => {
+  const response: AxiosResponse<any> = await apiActions.post(
+    `/api/v1/auth/signup/personal/`,
+    data,
+  );
+  return response.data;
+};
 
 export const getAccount = async (
   member_code: string,
