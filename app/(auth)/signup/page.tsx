@@ -58,7 +58,7 @@ export default function SignupPage() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2.5}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
                 label="First Name"
@@ -68,7 +68,7 @@ export default function SignupPage() {
                 helperText={errors.first_name?.message}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <TextField
                 fullWidth
                 label="Last Name"

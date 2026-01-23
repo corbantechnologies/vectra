@@ -24,7 +24,7 @@ export default function Footer() {
     <Box sx={{ backgroundColor: "primary.main", color: "#fff", pt: 8, pb: 4 }}>
       <Container maxWidth="lg">
         <Grid container spacing={4} sx={{ mb: 4 }}>
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h6" sx={{ fontWeight: 800, mb: 2 }}>
               VECTRA
             </Typography>
@@ -56,7 +56,7 @@ export default function Footer() {
               ))}
             </Stack>
           </Grid>
-          <Grid item xs={6} md={2}>
+          <Grid size={{ xs: 6, md: 2 }}>
             <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2 }}>
               Product
             </Typography>
@@ -77,7 +77,7 @@ export default function Footer() {
               )}
             </Stack>
           </Grid>
-          <Grid item xs={6} md={2}>
+          <Grid size={{ xs: 6, md: 2 }}>
             <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2 }}>
               Company
             </Typography>
@@ -96,7 +96,7 @@ export default function Footer() {
               ))}
             </Stack>
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2 }}>
               Newsletter
             </Typography>
