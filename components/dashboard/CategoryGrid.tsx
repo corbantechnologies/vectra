@@ -4,14 +4,19 @@ import React from "react";
 import {
   Box,
   Typography,
-  Grid,
-  Paper,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   IconButton,
   Skeleton,
+  Paper,
+  Stack,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { Kategoria } from "@/services/kategoria";
 import CategoryIcon from "@mui/icons-material/Category";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 interface CategoryGridProps {
   categories: Kategoria[];
@@ -30,17 +35,16 @@ export default function CategoryGrid({
     return (
       <Box>
         <Skeleton width={150} height={32} sx={{ mb: 2 }} />
-        <Grid container spacing={2}>
-          {[1, 2, 3, 4].map((i) => (
-            <Grid size={{ xs: 6 }} key={i}>
-              <Skeleton
-                variant="rectangular"
-                height={100}
-                sx={{ borderRadius: 4 }}
-              />
-            </Grid>
+        <Stack spacing={1}>
+          {[1, 2, 3, 4, 5].map((i) => (
+            <Skeleton
+              key={i}
+              variant="rectangular"
+              height={60}
+              sx={{ borderRadius: 3 }}
+            />
           ))}
-        </Grid>
+        </Stack>
       </Box>
     );
   }
@@ -72,82 +76,98 @@ export default function CategoryGrid({
         </IconButton>
       </Box>
 
-      <Grid container spacing={2}>
-        {categories.length === 0 ? (
-          <Grid size={{ xs: 12 }}>
-            <Box
-              sx={{
-                p: 4,
-                textAlign: "center",
-                bgcolor: "#f8fdf9",
-                borderRadius: 4,
-                border: "1px dashed rgba(53, 114, 82, 0.2)",
-              }}
-            >
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ fontWeight: 600 }}
-              >
-                No categories found.
-              </Typography>
-            </Box>
-          </Grid>
-        ) : (
-          categories.map((cat) => (
-            <Grid size={{ xs: 6 }} key={cat.reference}>
-              <Paper
-                elevation={0}
-                onClick={() => onCategoryClick(cat)}
-                sx={{
-                  p: 2.5,
-                  textAlign: "center",
-                  cursor: "pointer",
-                  bgcolor: "#fff",
-                  borderRadius: 5,
-                  border: "1px solid rgba(0,0,0,0.05)",
-                  transition: "all 0.2s ease-in-out",
-                  "&:hover": {
-                    borderColor: "#357252",
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 4px 20px rgba(53, 114, 82, 0.08)",
-                  },
-                }}
-              >
-                <Box
+      {categories.length === 0 ? (
+        <Box
+          sx={{
+            p: 4,
+            textAlign: "center",
+            bgcolor: "#f8fdf9",
+            borderRadius: 4,
+            border: "1px dashed rgba(53, 114, 82, 0.2)",
+          }}
+        >
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ fontWeight: 600 }}
+          >
+            No categories found.
+          </Typography>
+        </Box>
+      ) : (
+        <Paper
+          elevation={0}
+          sx={{
+            borderRadius: 5,
+            bgcolor: "#fff",
+            border: "1px solid rgba(0,0,0,0.05)",
+            overflow: "hidden",
+          }}
+        >
+          <List disablePadding>
+            {categories.map((cat, index) => (
+              <React.Fragment key={cat.reference}>
+                <ListItem
+                  onClick={() => onCategoryClick(cat)}
                   sx={{
-                    width: 48,
-                    height: 48,
-                    bgcolor: "rgba(53, 114, 82, 0.05)",
-                    borderRadius: 3,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    mx: "auto",
-                    mb: 1.5,
-                    color: "#357252",
+                    py: 2,
+                    px: 3,
+                    cursor: "pointer",
+                    transition: "all 0.2s",
+                    "&:hover": {
+                      bgcolor: "#f8fdf9",
+                    },
                   }}
+                  secondaryAction={
+                    <ChevronRightIcon
+                      sx={{ color: "text.disabled", fontSize: 20 }}
+                    />
+                  }
                 >
-                  <CategoryIcon fontSize="small" />
-                </Box>
-                <Typography
-                  variant="subtitle2"
-                  sx={{ fontWeight: 800, color: "#1a1a1a" }}
-                >
-                  {cat.name}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  sx={{ fontWeight: 600 }}
-                >
-                  Active
-                </Typography>
-              </Paper>
-            </Grid>
-          ))
-        )}
-      </Grid>
+                  <ListItemIcon sx={{ minWidth: 48 }}>
+                    <Box
+                      sx={{
+                        width: 40,
+                        height: 40,
+                        bgcolor: "rgba(53, 114, 82, 0.05)",
+                        borderRadius: 2.5,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#357252",
+                      }}
+                    >
+                      <CategoryIcon fontSize="small" />
+                    </Box>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Typography
+                        variant="subtitle2"
+                        sx={{ fontWeight: 800, color: "#1a1a1a" }}
+                      >
+                        {cat.name}
+                      </Typography>
+                    }
+                    secondary={
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        sx={{ fontWeight: 600 }}
+                      >
+                        {cat.semikategorias?.length || 0} Subcategories
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+                {index < categories.length - 1 && (
+                  <Box sx={{ height: 1, bgcolor: "rgba(0,0,0,0.03)", mx: 2 }} />
+                )}
+              </React.Fragment>
+            ))}
+          </List>
+        </Paper>
+      )}
     </Box>
   );
 }

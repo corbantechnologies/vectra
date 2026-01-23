@@ -181,7 +181,7 @@ export default function Dashboard() {
             p: 3,
           }}
         >
-          <Typography variant="h6" sx={{ fontWeight: 800 }}>
+          <Typography variant="h6" component="span" sx={{ fontWeight: 800 }}>
             New Category
           </Typography>
           <IconButton onClick={() => setOpenKategoria(false)} size="small">
@@ -213,7 +213,7 @@ export default function Dashboard() {
             p: 3,
           }}
         >
-          <Typography variant="h6" sx={{ fontWeight: 800 }}>
+          <Typography variant="h6" component="span" sx={{ fontWeight: 800 }}>
             New Transaction
           </Typography>
           <IconButton onClick={() => setOpenTransaction(false)} size="small">

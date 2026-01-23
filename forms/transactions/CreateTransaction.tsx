@@ -67,7 +67,7 @@ export default function CreateTransaction({
         setFetchingData(false);
       }
     };
-    if (header.headers.Authorization !== "Token undefined") {
+    if (header.token) {
       fetchKategoria();
     }
   }, [kategoriaReference, header]);
@@ -117,7 +117,7 @@ export default function CreateTransaction({
             render={({ field }) => (
               <ToggleButtonGroup
                 color="primary"
-                value={field.value}
+                value={field.value || "EXP"}
                 exclusive
                 onChange={(_, value) => value && field.onChange(value)}
                 fullWidth
