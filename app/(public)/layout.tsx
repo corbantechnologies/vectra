@@ -1,6 +1,5 @@
 "use client";
 
-import Footer from "@/components/landing/Footer";
 
 export default function LandingLayout({
   children,
@@ -10,7 +9,6 @@ export default function LandingLayout({
   return (
     <div>
       {children}
-      <Footer />
     </div>
   );
 }

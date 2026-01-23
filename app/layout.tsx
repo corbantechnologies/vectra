@@ -6,6 +6,10 @@ import TanstackQueryProvider from "@/providers/TanstackQueryProvider";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "react-hot-toast";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import theme from "@/lib/theme";
 
 export default function RootLayout({
   children,
@@ -30,7 +34,14 @@ export default function RootLayout({
       <body>
         <Toaster position="bottom-center" reverseOrder={false} />
         <NextAuthProvider>
-          <TanstackQueryProvider>{children}</TanstackQueryProvider>
+          <TanstackQueryProvider>
+            <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                {children}
+              </ThemeProvider>
+            </AppRouterCacheProvider>
+          </TanstackQueryProvider>
         </NextAuthProvider>
         <Analytics />
         <SpeedInsights />

@@ -1,3 +1,9 @@
+@layer theme, base, mui, components, utilities;
+
+@layer mui {
+  @block-content;
+}
+
 @import "tailwindcss";
 
 :root {
@@ -8,9 +14,15 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: #357252;
+  --color-primary-light: #96ba94;
+  --color-accent: #deefa2;
+  --color-secondary-bg: #eef7f1;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
+
+
 
 @media (prefers-color-scheme: dark) {
   :root {
