@@ -1,124 +1,62 @@
 "use client";
 
 import React from "react";
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Box,
-  Avatar,
-  Stack,
-  useTheme,
-  useMediaQuery,
-} from "@mui/material";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import SearchIcon from "@mui/icons-material/Search";
-
+import { signOut } from "next-auth/react";
 import { useFetchAccount } from "@/hooks/accounts/actions";
+import { LogOut, Bell } from "lucide-react";
 
 export default function DashboardHeader() {
   const { data: user } = useFetchAccount();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <AppBar
-      position="sticky"
-      elevation={0}
-      sx={{
-        bgcolor: "#fff",
-        color: "text.primary",
-        borderBottom: "1px solid",
-        borderColor: "divider",
-        zIndex: theme.zIndex.drawer + 1,
-      }}
-    >
-      <Toolbar sx={{ justifyContent: "space-between", height: 72 }}>
-        <Stack direction="row" alignItems="center" spacing={4}>
-          <Typography
-            variant="h5"
-            sx={{
-              fontWeight: 900,
-              letterSpacing: 1,
-              background: "linear-gradient(45deg, #357252 30%, #96ba94 90%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              cursor: "pointer",
-            }}
-          >
+    <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-100 shadow-sm">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        {/* Branding */}
+        <div className="flex items-center">
+          <h1 className="text-2xl font-black tracking-tighter cursor-pointer bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
             VECTRA
-          </Typography>
+          </h1>
+        </div>
 
-          {!isMobile && (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                bgcolor: "#f8fdf9",
-                px: 2,
-                py: 1,
-                borderRadius: 3,
-                border: "1px solid",
-                borderColor: "rgba(53, 114, 82, 0.1)",
-                minWidth: 300,
-              }}
-            >
-              <SearchIcon
-                fontSize="small"
-                sx={{ color: "#357252", mr: 1.5, opacity: 0.6 }}
-              />
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ fontWeight: 500 }}
-              >
-                Search for transactions, categories...
-              </Typography>
-            </Box>
-          )}
-        </Stack>
+        {/* Right Actions */}
+        <div className="flex items-center gap-4 sm:gap-6">
+          {/* Notifications */}
+          <button className="p-2.5 text-emerald-600 bg-emerald-50 rounded-xl hover:bg-emerald-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <Bell size={20} />
+          </button>
 
-        <Stack direction="row" alignItems="center" spacing={3}>
-          <IconButton sx={{ bgcolor: "#f8fdf9", color: "#357252" }}>
-            <NotificationsNoneIcon fontSize="small" />
-          </IconButton>
+          <div className="h-10 w-px bg-gray-100 hidden sm:block"></div>
 
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <Box
-              sx={{ textAlign: "right", display: { xs: "none", sm: "block" } }}
-            >
-              <Typography
-                variant="subtitle2"
-                sx={{ fontWeight: 800, lineHeight: 1.2 }}
-              >
+          {/* User Profile & Sign Out */}
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="hidden sm:flex flex-col text-right">
+              <span className="text-sm font-bold text-gray-900 leading-tight">
                 {user?.first_name} {user?.last_name}
-              </Typography>
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                sx={{ fontWeight: 600 }}
-              >
+              </span>
+              <span className="text-[11px] font-bold text-gray-500 uppercase tracking-wider">
                 {user?.member_code || "Personal Account"}
-              </Typography>
-            </Box>
-            <Avatar
-              sx={{
-                width: 44,
-                height: 44,
-                bgcolor: "#357252",
-                boxShadow: "0 2px 8px rgba(53, 114, 82, 0.2)",
-                fontSize: 18,
-                fontWeight: 900,
-                border: "2px solid #fff",
-              }}
-            >
+              </span>
+            </div>
+
+            {/* Avatar */}
+            <div className="h-11 w-11 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-black text-lg shadow-lg shadow-emerald-200 border-2 border-white ring-1 ring-emerald-600/10">
               {user?.first_name?.[0]}
               {user?.last_name?.[0]}
-            </Avatar>
-          </Stack>
-        </Stack>
-      </Toolbar>
-    </AppBar>
+            </div>
+
+            <button
+              onClick={() => signOut({ callbackUrl: "/auth/login" })}
+              className="ml-2 p-2.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all duration-200 group focus:outline-none focus:ring-2 focus:ring-red-500"
+              title="Sign Out"
+            >
+              <LogOut
+                size={20}
+                className="group-hover:scale-110 transition-transform"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 }

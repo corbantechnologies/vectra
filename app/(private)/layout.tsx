@@ -14,7 +14,7 @@ export default function PrivateLayout({
         display: "flex",
         flexDirection: "column",
         minHeight: "100vh",
-        bgcolor: "#f8fdf9",
+        bgcolor: "#d2d2d2",
       }}
     >
       <CssBaseline />
