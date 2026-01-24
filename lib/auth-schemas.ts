@@ -11,7 +11,6 @@ export const signupSchema = z.object({
   first_name: z.string().min(2, "First name is too short"),
   last_name: z.string().min(2, "Last name is too short"),
   email: z.string().email("Invalid email address"),
-  phone_number: z.string().min(10, "Invalid phone number"),
   password: z.string().min(8, "Password must be at least 8 characters"),
   password_confirmation: z.string().min(8, "Confirmation must be at least 8 characters"),
 }).refine((data) => data.password === data.password_confirmation, {
