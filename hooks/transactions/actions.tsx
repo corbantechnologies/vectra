@@ -5,12 +5,12 @@ import useAxiosAuth from "../authentication/useAxiosAuth";
 import { getTransactions, getTransaction } from "@/services/transactions";
 
 export function useFetchTransactions() {
-  const header = useAxiosAuth();
+  const { headers, token } = useAxiosAuth();
 
   return useQuery({
     queryKey: ["transactions"],
-    queryFn: () => getTransactions(header),
-    enabled: true,
+    queryFn: () => getTransactions({ headers }),
+    enabled: !!token,
   });
 }
 

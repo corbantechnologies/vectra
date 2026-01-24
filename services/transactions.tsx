@@ -21,10 +21,10 @@ export interface Transaction {
 interface createTransaction {
   transaction_type: string; // IN or EXP
   transaction_method: string; // CASH or CARD
-  amount: string;
-  date: string;
-  kategoria: string; // can be null
-  semikategoria: string; // can be null
+  amount: string; // required
+  date: string; // required
+  kategoria: string; // required. It will always be there as it is in the specific category detail or tab. it is the reference of the category.
+  semikategoria: string; // can be null. It is the reference of the subcategory.
 }
 
 interface updateTransaction {

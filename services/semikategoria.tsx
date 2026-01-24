@@ -17,12 +17,12 @@ export interface SemiKategoria {
 
 interface createSemiKategoria {
   name: string;
-  kategoria: string;
+  kategoria: string; // the value is the reference of the category
 }
 
 interface updateSemiKategoria {
   name: string;
-  kategoria: string;
+  kategoria: string; // the value is the reference of the category
 }
 
 export async function createSemiKategoria(
@@ -30,7 +30,7 @@ export async function createSemiKategoria(
   header: { headers: { Authorization: string } },
 ) {
   const response: AxiosResponse<SemiKategoria> = await apiActions.post(
-    "api/v1/semikategorias/",
+    "api/v1/semikategoria/",
     semikategoria,
     header,
   );
@@ -43,7 +43,7 @@ export async function updateSemiKategoria(
   reference: string,
 ) {
   const response: AxiosResponse<SemiKategoria> = await apiActions.patch(
-    `api/v1/semikategorias/${reference}/`,
+    `api/v1/semikategoria/${reference}/`,
     semikategoria,
     header,
   );
@@ -54,7 +54,7 @@ export const getSemiKategorias = async (headers: {
   headers: { Authorization: string };
 }): Promise<SemiKategoria[]> => {
   const response: AxiosResponse<PaginatedResponse<SemiKategoria>> =
-    await apiActions.get(`/api/v1/semikategorias/`, headers);
+    await apiActions.get(`/api/v1/semikategoria/`, headers);
   return response.data.results || [];
 };
 
@@ -63,7 +63,7 @@ export const getSemiKategoria = async (
   reference: string,
 ): Promise<SemiKategoria> => {
   const response: AxiosResponse<SemiKategoria> = await apiActions.get(
-    `/api/v1/semikategorias/${reference}/`,
+    `/api/v1/semikategoria/${reference}/`,
     headers,
   );
   return response.data;
@@ -74,7 +74,7 @@ export async function deleteSemiKategoria(
   reference: string,
 ) {
   const response: AxiosResponse<SemiKategoria> = await apiActions.delete(
-    `api/v1/semikategorias/${reference}/`,
+    `api/v1/semikategoria/${reference}/`,
     header,
   );
   return response.data;

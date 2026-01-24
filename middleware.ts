@@ -4,5 +4,5 @@ import nextAuthMiddleware from "next-auth/middleware";
 export const middleware = nextAuthMiddleware;
 
 export const config = {
-  matcher: ["/(private)/:path*"],
+  matcher: ["/(private)/:path*", "/dashboard/:path*", "/categories/:path*",],
 };

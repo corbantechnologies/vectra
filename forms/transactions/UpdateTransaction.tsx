@@ -5,22 +5,22 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { transactionSchema, TransactionFormValues } from "@/lib/form-schemas";
-import { createTransaction } from "@/services/transactions";
+import { updateTransaction, Transaction } from "@/services/transactions";
 import { useFetchKategorias } from "@/hooks/kategoria/actions";
 import { toast } from "react-hot-toast";
 import useAxiosAuth from "@/hooks/authentication/useAxiosAuth";
 
-interface CreateTransactionProps {
-  kategoriaReference: string;
+interface UpdateTransactionProps {
+  transaction: Transaction;
   onSuccess?: () => void;
   onCancel?: () => void;
 }
 
-export default function CreateTransaction({
-  kategoriaReference,
+export default function UpdateTransaction({
+  transaction,
   onSuccess,
   onCancel,
-}: CreateTransactionProps) {
+}: UpdateTransactionProps) {
   const [loading, setLoading] = useState(false);
   const header = useAxiosAuth();
 
@@ -32,18 +32,17 @@ export default function CreateTransaction({
     handleSubmit,
     control,
     formState: { errors },
-    reset,
     watch,
     setValue,
   } = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
-      transaction_type: "EXP",
-      transaction_method: "CASH",
-      amount: "",
-      date: new Date().toISOString().split("T")[0],
-      kategoria: kategoriaReference,
-      semikategoria: "",
+      transaction_type: transaction.transaction_type as any,
+      transaction_method: transaction.transaction_method as any,
+      amount: transaction.amount,
+      date: transaction.date.split("T")[0],
+      kategoria: transaction.kategoria,
+      semikategoria: transaction.semikategoria || "",
     },
   });
 
@@ -53,30 +52,24 @@ export default function CreateTransaction({
     return kategorias.find((k) => k.reference === selectedKategoriaRef);
   }, [kategorias, selectedKategoriaRef]);
 
-  // Reset subcategory if kategoria changes
+  // Reset subcategory if kategoria changes manually
   useEffect(() => {
-    setValue("semikategoria", "");
-  }, [selectedKategoriaRef, setValue]);
+    // Only reset if it's not the initial value set by the transaction prop
+    if (selectedKategoriaRef !== transaction.kategoria) {
+      setValue("semikategoria", "");
+    }
+  }, [selectedKategoriaRef, setValue, transaction.kategoria]);
 
   const onSubmit = async (data: TransactionFormValues) => {
     setLoading(true);
     try {
-      await createTransaction(data as any, header);
-      toast.success("Transaction recorded successfully!");
-      reset({
-        transaction_type: data.transaction_type,
-        transaction_method: data.transaction_method,
-        amount: "",
-        date: new Date().toISOString().split("T")[0],
-        kategoria: kategoriaReference,
-        semikategoria: "",
-      });
+      await updateTransaction(data as any, header, transaction.reference);
+      toast.success("Transaction updated successfully!");
       if (onSuccess) onSuccess();
     } catch (error: any) {
-      console.log(error);
       toast.error(
         error.response?.data?.message ||
-          "Failed to record transaction. Please try again.",
+          "Failed to update transaction. Please try again.",
       );
     } finally {
       setLoading(false);
@@ -99,7 +92,7 @@ export default function CreateTransaction({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6 max-w-lg mx-auto p-2"
+      className="space-y-6 max-w-lg mx-auto p-4"
     >
       {/* Transaction Type Toggle */}
       <div className="space-y-2">
@@ -169,7 +162,6 @@ export default function CreateTransaction({
           id="amount"
           type="number"
           step="0.01"
-          placeholder="0.00"
           {...register("amount")}
           className={`${inputClasses} ${errors.amount ? "border-red-500" : "border-gray-300"}`}
         />
@@ -238,17 +230,26 @@ export default function CreateTransaction({
       )}
 
       {/* Action Buttons */}
-      <div className="flex flex-col gap-3 pt-4">
+      <div className="flex gap-3 pt-2">
+        {onCancel && (
+          <button
+            type="button"
+            onClick={onCancel}
+            disabled={loading}
+            className="flex-1 py-2 px-4 border border-gray-300 text-gray-700 font-bold rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
+          >
+            Cancel
+          </button>
+        )}
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 px-4 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+          className="flex-1 py-2 px-4 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 shadow-lg shadow-emerald-200/50 transition-all active:scale-95 disabled:opacity-50 flex justify-center items-center gap-2"
         >
-          {loading ? (
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-          ) : (
-            "Record Transaction"
+          {loading && (
+            <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white"></div>
           )}
+          {loading ? "Updating..." : "Update Transaction"}
         </button>
       </div>
     </form>
