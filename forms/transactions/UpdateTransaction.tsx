@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { transactionSchema, TransactionFormValues } from "@/lib/form-schemas";
 import { updateTransaction, Transaction } from "@/services/transactions";
-import { getKategoria, Kategoria } from "@/services/kategoria";
+import { useFetchKategorias } from "@/hooks/kategoria/actions";
 import { toast } from "react-hot-toast";
 import useAxiosAuth from "@/hooks/authentication/useAxiosAuth";
 
@@ -22,15 +22,18 @@ export default function UpdateTransaction({
   onCancel,
 }: UpdateTransactionProps) {
   const [loading, setLoading] = useState(false);
-  const [fetchingData, setFetchingData] = useState(true);
-  const [kategoria, setKategoria] = useState<Kategoria | null>(null);
   const header = useAxiosAuth();
+
+  const { data: kategorias = [], isLoading: fetchingData } =
+    useFetchKategorias();
 
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
+    watch,
+    setValue,
   } = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
@@ -43,21 +46,19 @@ export default function UpdateTransaction({
     },
   });
 
+  const selectedKategoriaRef = watch("kategoria");
+
+  const selectedKategoria = useMemo(() => {
+    return kategorias.find((k) => k.reference === selectedKategoriaRef);
+  }, [kategorias, selectedKategoriaRef]);
+
+  // Reset subcategory if kategoria changes manually
   useEffect(() => {
-    const fetchKategoria = async () => {
-      try {
-        const data = await getKategoria(header, transaction.kategoria);
-        setKategoria(data);
-      } catch (error) {
-        toast.error("Failed to load category metadata.");
-      } finally {
-        setFetchingData(false);
-      }
-    };
-    if (header.token) {
-      fetchKategoria();
+    // Only reset if it's not the initial value set by the transaction prop
+    if (selectedKategoriaRef !== transaction.kategoria) {
+      setValue("semikategoria", "");
     }
-  }, [transaction.kategoria, header]);
+  }, [selectedKategoriaRef, setValue, transaction.kategoria]);
 
   const onSubmit = async (data: TransactionFormValues) => {
     setLoading(true);
@@ -131,6 +132,27 @@ export default function UpdateTransaction({
         )}
       </div>
 
+      {/* Category Select */}
+      <div>
+        <label htmlFor="kategoria" className={labelClasses}>
+          Category
+        </label>
+        <select
+          id="kategoria"
+          {...register("kategoria")}
+          className={`${inputClasses} ${errors.kategoria ? "border-red-500" : "border-gray-300"}`}
+        >
+          {kategorias.map((k) => (
+            <option key={k.reference} value={k.reference}>
+              {k.name}
+            </option>
+          ))}
+        </select>
+        {errors.kategoria && (
+          <p className={errorClasses}>{errors.kategoria.message}</p>
+        )}
+      </div>
+
       {/* Amount Input */}
       <div>
         <label htmlFor="amount" className={labelClasses}>
@@ -184,7 +206,7 @@ export default function UpdateTransaction({
       </div>
 
       {/* Subcategory Select */}
-      {kategoria && kategoria.semikategorias.length > 0 && (
+      {selectedKategoria && selectedKategoria.semikategorias.length > 0 && (
         <div>
           <label htmlFor="semikategoria" className={labelClasses}>
             Subcategory (Optional)
@@ -195,7 +217,7 @@ export default function UpdateTransaction({
             className={`${inputClasses} ${errors.semikategoria ? "border-red-500" : "border-gray-300"}`}
           >
             <option value="">None</option>
-            {kategoria.semikategorias.map((s) => (
+            {selectedKategoria.semikategorias.map((s) => (
               <option key={s.reference} value={s.reference}>
                 {s.name}
               </option>
