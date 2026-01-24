@@ -10,11 +10,10 @@ import {
   DialogTitle,
   DialogContent,
   IconButton,
-  Grid,
-  Paper,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
+import Link from "next/link";
 import SummaryCards from "@/components/dashboard/SummaryCards";
 import CategoryGrid from "@/components/dashboard/CategoryGrid";
 import TransactionList from "@/components/dashboard/TransactionList";
@@ -32,6 +31,7 @@ export default function Dashboard() {
   const [selectedKategoriaRef, setSelectedKategoriaRef] = useState<
     string | null
   >(null);
+  const [activeTab, setActiveTab] = useState("all");
 
   const {
     data: kategorias = [],
@@ -59,6 +59,11 @@ export default function Dashboard() {
       { income: 0, expenses: 0 },
     );
   }, [transactions]);
+
+  const filteredTransactions = useMemo(() => {
+    if (activeTab === "all") return transactions;
+    return transactions.filter((t) => t.kategoria === activeTab);
+  }, [transactions, activeTab]);
 
   const handleOpenTransaction = (kRef?: string) => {
     setSelectedKategoriaRef(kRef || null);
@@ -135,21 +140,68 @@ export default function Dashboard() {
       {/* Financial Summary */}
       <SummaryCards income={totals.income} expenses={totals.expenses} />
 
-      <Grid container spacing={4}>
-        <Grid size={{ xs: 12, lg: 8 }}>
-          <TransactionList transactions={transactions.slice(0, 10)} />
-        </Grid>
+      {/* Category Tabs */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
+        <button
+          onClick={() => setActiveTab("all")}
+          className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 whitespace-nowrap ${
+            activeTab === "all"
+              ? "bg-emerald-600 text-white shadow-lg shadow-emerald-200"
+              : "bg-white text-gray-500 hover:bg-gray-50 border border-gray-100"
+          }`}
+        >
+          Overview
+        </button>
+        {kategorias.map((cat) => (
+          <button
+            key={cat.reference}
+            onClick={() => setActiveTab(cat.reference)}
+            className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 whitespace-nowrap ${
+              activeTab === cat.reference
+                ? "bg-emerald-600 text-white shadow-lg shadow-emerald-200"
+                : "bg-white text-gray-500 hover:bg-gray-50 border border-gray-100"
+            }`}
+          >
+            {cat.name}
+          </button>
+        ))}
+        <button
+          onClick={() => setOpenKategoria(true)}
+          className="px-4 py-2.5 rounded-xl text-sm font-bold text-emerald-600 bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 transition-all duration-200 flex items-center gap-1.5 whitespace-nowrap"
+        >
+          <AddIcon sx={{ fontSize: 18 }} /> New
+        </button>
+      </div>
 
-        <Grid size={{ xs: 12, lg: 4 }}>
-          <Stack spacing={4}>
-            <CategoryGrid
-              categories={kategorias.slice(0, 6)}
-              onAddClick={() => setOpenKategoria(true)}
-              onCategoryClick={handleKategoriaClick}
-            />
-          </Stack>
-        </Grid>
-      </Grid>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="lg:col-span-8 flex flex-col gap-6">
+          <TransactionList transactions={filteredTransactions.slice(0, 10)} />
+        </div>
+
+        <div className="lg:col-span-4 flex flex-col gap-8">
+          <CategoryGrid
+            categories={kategorias.slice(0, 6)}
+            onAddClick={() => setOpenKategoria(true)}
+            onCategoryClick={handleKategoriaClick}
+          />
+
+          {/* Subcategory Provision (Quick Link/Placeholder for now) */}
+          <div className="bg-emerald-600 rounded-3xl p-6 text-white shadow-xl shadow-emerald-200 relative overflow-hidden group">
+            <div className="relative z-10">
+              <h4 className="text-lg font-black mb-1">Subcategories</h4>
+              <p className="text-emerald-100 text-sm mb-4 font-medium opacity-90">
+                Organize your expenses with precision.
+              </p>
+              <Link href="/categories">
+                <button className="bg-white text-emerald-600 px-4 py-2 rounded-xl text-sm font-black hover:bg-emerald-50 transition-colors shadow-sm">
+                  Manage Subcategories
+                </button>
+              </Link>
+            </div>
+            <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+          </div>
+        </div>
+      </div>
 
       {/* Floating Action Button for Mobile Quick Actions */}
       <Fab

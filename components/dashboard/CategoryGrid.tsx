@@ -17,6 +17,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { Kategoria } from "@/services/kategoria";
 import CategoryIcon from "@mui/icons-material/Category";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import Link from "next/link";
 
 interface CategoryGridProps {
   categories: Kategoria[];
@@ -107,59 +108,66 @@ export default function CategoryGrid({
           <List disablePadding>
             {categories.map((cat, index) => (
               <React.Fragment key={cat.reference}>
-                <ListItem
+                <Link href={`/categories/${cat.reference}`} className="flex-1">
+                  <ListItem
+                    sx={{
+                      py: 2,
+                      px: 3,
+                      cursor: "pointer",
+                      transition: "all 0.2s",
+                      "&:hover": {
+                        bgcolor: "#f8fdf9",
+                      },
+                    }}
+                  >
+                    <ListItemIcon sx={{ minWidth: 48 }}>
+                      <Box
+                        sx={{
+                          width: 40,
+                          height: 40,
+                          bgcolor: "rgba(53, 114, 82, 0.05)",
+                          borderRadius: 2.5,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "#357252",
+                        }}
+                      >
+                        <CategoryIcon fontSize="small" />
+                      </Box>
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          variant="subtitle2"
+                          sx={{ fontWeight: 800, color: "#1a1a1a" }}
+                        >
+                          {cat.name}
+                        </Typography>
+                      }
+                      secondary={
+                        <Typography
+                          variant="caption"
+                          color="text.secondary"
+                          sx={{ fontWeight: 600 }}
+                        >
+                          {cat.semikategorias?.length || 0} Subcategories
+                        </Typography>
+                      }
+                    />
+                  </ListItem>
+                </Link>
+                <IconButton
+                  size="small"
                   onClick={() => onCategoryClick(cat)}
                   sx={{
-                    py: 2,
-                    px: 3,
-                    cursor: "pointer",
-                    transition: "all 0.2s",
-                    "&:hover": {
-                      bgcolor: "#f8fdf9",
-                    },
+                    mr: 1,
+                    color: "text.disabled",
+                    "&:hover": { color: "#357252" },
                   }}
-                  secondaryAction={
-                    <ChevronRightIcon
-                      sx={{ color: "text.disabled", fontSize: 20 }}
-                    />
-                  }
                 >
-                  <ListItemIcon sx={{ minWidth: 48 }}>
-                    <Box
-                      sx={{
-                        width: 40,
-                        height: 40,
-                        bgcolor: "rgba(53, 114, 82, 0.05)",
-                        borderRadius: 2.5,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: "#357252",
-                      }}
-                    >
-                      <CategoryIcon fontSize="small" />
-                    </Box>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      <Typography
-                        variant="subtitle2"
-                        sx={{ fontWeight: 800, color: "#1a1a1a" }}
-                      >
-                        {cat.name}
-                      </Typography>
-                    }
-                    secondary={
-                      <Typography
-                        variant="caption"
-                        color="text.secondary"
-                        sx={{ fontWeight: 600 }}
-                      >
-                        {cat.semikategorias?.length || 0} Subcategories
-                      </Typography>
-                    }
-                  />
-                </ListItem>
+                  <ChevronRightIcon sx={{ fontSize: 20 }} />
+                </IconButton>
                 {index < categories.length - 1 && (
                   <Box sx={{ height: 1, bgcolor: "rgba(0,0,0,0.03)", mx: 2 }} />
                 )}

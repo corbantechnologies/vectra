@@ -3,7 +3,8 @@
 import React from "react";
 import { signOut } from "next-auth/react";
 import { useFetchAccount } from "@/hooks/accounts/actions";
-import { LogOut, Bell } from "lucide-react";
+import { LogOut, Bell, LayoutDashboard, FolderOpen } from "lucide-react";
+import Link from "next/link";
 
 export default function DashboardHeader() {
   const { data: user } = useFetchAccount();
@@ -11,11 +12,30 @@ export default function DashboardHeader() {
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-100 shadow-sm">
       <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Branding */}
-        <div className="flex items-center">
-          <h1 className="text-2xl font-black tracking-tighter cursor-pointer bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
-            VECTRA
-          </h1>
+        {/* Branding & Nav */}
+        <div className="flex items-center gap-8">
+          <Link href="/dashboard">
+            <h1 className="text-2xl font-black tracking-tighter cursor-pointer bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
+              VECTRA
+            </h1>
+          </Link>
+
+          <nav className="hidden md:flex items-center gap-6">
+            <Link
+              href="/dashboard"
+              className="flex items-center gap-2 text-sm font-bold text-emerald-600 px-4 py-2 bg-emerald-50 rounded-xl"
+            >
+              <LayoutDashboard size={18} />
+              <span>Dashboard</span>
+            </Link>
+            <Link
+              href="/categories"
+              className="flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-emerald-600 px-4 py-2 hover:bg-emerald-50 rounded-xl transition-all"
+            >
+              <FolderOpen size={18} />
+              <span>Categories</span>
+            </Link>
+          </nav>
         </div>
 
         {/* Right Actions */}

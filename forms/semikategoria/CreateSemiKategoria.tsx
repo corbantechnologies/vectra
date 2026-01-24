@@ -9,12 +9,11 @@ import {
   SemiKategoriaFormValues,
 } from "@/lib/form-schemas";
 import { createSemiKategoria } from "@/services/semikategoria";
-import { TextField, Button, Stack, Box } from "@mui/material";
 import { toast } from "react-hot-toast";
 import useAxiosAuth from "@/hooks/authentication/useAxiosAuth";
 
 interface CreateSemiKategoriaProps {
-  kategoriaReference: string; // The parent category reference
+  kategoriaReference: string;
   onSuccess?: () => void;
   onCancel?: () => void;
 }
@@ -31,7 +30,6 @@ export default function CreateSemiKategoria({
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<SemiKategoriaFormValues>({
     resolver: zodResolver(semikategoriaSchema),
     defaultValues: {
@@ -45,7 +43,6 @@ export default function CreateSemiKategoria({
     try {
       await createSemiKategoria(data, header);
       toast.success("Subcategory created successfully!");
-      reset({ name: "", kategoria: kategoriaReference });
       if (onSuccess) onSuccess();
     } catch (error: any) {
       toast.error(
@@ -57,31 +54,53 @@ export default function CreateSemiKategoria({
     }
   };
 
+  const inputClasses =
+    "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200 bg-white text-gray-900";
+  const labelClasses = "block text-sm font-semibold text-gray-700 mb-1";
+  const errorClasses = "text-xs text-red-500 mt-1 font-medium";
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={3}>
-        <TextField
-          fullWidth
-          label="Subcategory Name"
-          variant="outlined"
-          placeholder="e.g. Food, Transport, Rent"
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-6 max-w-lg mx-auto p-2"
+    >
+      <div>
+        <label htmlFor="name" className={labelClasses}>
+          Subcategory Name
+        </label>
+        <input
+          id="name"
+          type="text"
+          placeholder="e.g. Groceries, Rent, Salary"
           {...register("name")}
-          error={!!errors.name}
-          helperText={errors.name?.message}
+          className={`${inputClasses} ${errors.name ? "border-red-500" : "border-gray-300"}`}
         />
-        <Box
-          sx={{ display: "flex", gap: 2, justifyContent: "flex-end", mt: 2 }}
+        {errors.name && <p className={errorClasses}>{errors.name.message}</p>}
+      </div>
+
+      <div className="flex flex-col gap-3 pt-4">
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full py-3 px-4 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
         >
-          {onCancel && (
-            <Button variant="outlined" onClick={onCancel} disabled={loading}>
-              Cancel
-            </Button>
+          {loading ? (
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+          ) : (
+            "Create Subcategory"
           )}
-          <Button type="submit" variant="contained" disabled={loading}>
-            {loading ? "Creating..." : "Create Subcategory"}
-          </Button>
-        </Box>
-      </Stack>
+        </button>
+        {onCancel && (
+          <button
+            type="button"
+            onClick={onCancel}
+            disabled={loading}
+            className="w-full py-2 text-sm font-bold text-gray-500 hover:text-gray-700 transition-colors"
+          >
+            Cancel
+          </button>
+        )}
+      </div>
     </form>
   );
 }
