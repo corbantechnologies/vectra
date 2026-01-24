@@ -1,170 +1,114 @@
 "use client";
 
-import React, { useState } from "react";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-
-const navItems = [
-  { label: "Features", href: "#features" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "About", href: "#about" },
-];
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const [scrolled, setScrolled] = useState(false);
 
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center", p: 2 }}>
-      <Typography
-        variant="h6"
-        sx={{ my: 2, fontWeight: 700, color: "primary.main" }}
-      >
-        VECTRA
-      </Typography>
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item.label} disablePadding>
-            <Button
-              fullWidth
-              component={Link}
-              href={item.href}
-              sx={{ textAlign: "center", color: "text.primary" }}
-            >
-              <ListItemText primary={item.label} />
-            </Button>
-          </ListItem>
-        ))}
-        <ListItem disablePadding sx={{ mt: 2 }}>
-          <Button
-            fullWidth
-            variant="outlined"
-            component={Link}
-            href="/login"
-            sx={{ borderRadius: "9999px" }}
-          >
-            Log In
-          </Button>
-        </ListItem>
-        <ListItem disablePadding sx={{ mt: 1 }}>
-          <Button
-            fullWidth
-            variant="contained"
-            component={Link}
-            href="/signup"
-            sx={{ borderRadius: "9999px" }}
-          >
-            Sign Up
-          </Button>
-        </ListItem>
-      </List>
-    </Box>
-  );
+  const navItems = [
+    { label: "Features", href: "#features" },
+    { label: "About", href: "#about" },
+  ];
 
   return (
-    <AppBar
-      position="sticky"
-      elevation={0}
-      sx={{
-        backgroundColor: "rgba(255, 255, 255, 0.8)",
-        backdropFilter: "blur(8px)",
-        borderBottom: "1px solid",
-        borderColor: "divider",
-      }}
+    <nav
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
+        scrolled
+          ? "bg-white/90 backdrop-blur-xl border-b border-gray-100 py-3 shadow-sm"
+          : "bg-transparent py-5"
+      }`}
     >
-      <Toolbar className="container mx-auto max-w-7xl">
-        <Typography
-          variant="h6"
-          component={Link}
-          href="/"
-          sx={{
-            flexGrow: 1,
-            fontWeight: 800,
-            letterSpacing: "-0.5px",
-            background: "linear-gradient(45deg, #357252 30%, #96ba94 90%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            textDecoration: "none",
-          }}
-        >
-          VECTRA
-        </Typography>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-emerald-200 group-hover:scale-110 transition-transform duration-300">
+              V
+            </div>
+            <span className="text-2xl font-black tracking-tighter bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
+              VECTRA
+            </span>
+          </Link>
 
-        {!isMobile ? (
-          <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-1">
             {navItems.map((item) => (
-              <Button
+              <Link
                 key={item.label}
-                component={Link}
                 href={item.href}
-                sx={{ color: "text.primary", fontWeight: 500 }}
+                className="px-5 py-2 text-sm font-bold text-gray-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all"
               >
                 {item.label}
-              </Button>
+              </Link>
             ))}
-            <Button
-              variant="text"
-              component={Link}
+            <div className="w-px h-6 bg-gray-100 mx-4" />
+            <Link
               href="/login"
-              sx={{ ml: 2 }}
+              className="px-5 py-2 text-sm font-bold text-gray-600 hover:text-emerald-600 transition-all"
             >
               Log In
-            </Button>
-            <Button
-              variant="contained"
-              component={Link}
+            </Link>
+            <Link
               href="/signup"
-              sx={{ borderRadius: "9999px", px: 3 }}
+              className="px-6 py-2.5 bg-emerald-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-emerald-200 hover:bg-emerald-700 hover:-translate-y-0.5 transition-all active:scale-95"
             >
               Get Started
-            </Button>
-          </Box>
-        ) : (
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ color: "primary.main" }}
-          >
-            <MenuIcon />
-          </IconButton>
-        )}
+            </Link>
+          </div>
 
-        <Drawer
-          anchor="right"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}
-          sx={{
-            display: { xs: "block", md: "none" },
-            "& .MuiDrawer-paper": { boxSizing: "border-box", width: 240 },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </Toolbar>
-    </AppBar>
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="md:hidden p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all"
+          >
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Drawer */}
+      {mobileOpen && (
+        <div className="fixed inset-0 top-[70px] z-[90] bg-white md:hidden animate-in fade-in slide-in-from-top-4 duration-300 h-screen overflow-y-auto">
+          <div className="px-4 pt-4 pb-24 space-y-2">
+            {navItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={() => setMobileOpen(false)}
+                className="block px-6 py-4 text-lg font-bold text-gray-600 hover:bg-emerald-50 hover:text-emerald-600 rounded-2xl transition-all"
+              >
+                {item.label}
+              </Link>
+            ))}
+            <hr className="my-4 border-gray-50" />
+            <Link
+              href="/login"
+              onClick={() => setMobileOpen(false)}
+              className="block px-6 py-4 text-lg font-bold text-gray-600 hover:bg-emerald-50 hover:text-emerald-600 rounded-2xl"
+            >
+              Log In
+            </Link>
+            <Link
+              href="/signup"
+              onClick={() => setMobileOpen(false)}
+              className="block w-full px-6 py-4 bg-emerald-600 text-white text-center text-lg font-bold rounded-2xl shadow-xl shadow-emerald-100"
+            >
+              Get Started for Free
+            </Link>
+          </div>
+        </div>
+      )}
+    </nav>
   );
 }

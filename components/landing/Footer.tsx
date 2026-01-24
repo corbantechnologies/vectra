@@ -1,125 +1,102 @@
 "use client";
 
 import React from "react";
-import {
-  Box,
-  Container,
-  Typography,
-  Grid,
-  Link as MuiLink,
-  IconButton,
-  Stack,
-  Divider,
-} from "@mui/material";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import InstagramIcon from "@mui/icons-material/Instagram";
+import { Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
 import Link from "next/link";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
+  const footerLinks = {
+    Product: [
+      { label: "Features", href: "#features" },
+      { label: "Integrations", href: "#" },
+      { label: "Changelog", href: "#" },
+    ],
+    Company: [
+      { label: "About Us", href: "#about" },
+      { label: "Contact", href: "#" },
+      { label: "Careers", href: "#" },
+      { label: "Legal", href: "#" },
+    ],
+  };
+
   return (
-    <Box sx={{ backgroundColor: "primary.main", color: "#fff", pt: 8, pb: 4 }}>
-      <Container maxWidth="lg">
-        <Grid container spacing={4} sx={{ mb: 4 }}>
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Typography variant="h6" sx={{ fontWeight: 800, mb: 2 }}>
-              VECTRA
-            </Typography>
-            <Typography
-              variant="body2"
-              sx={{ opacity: 0.8, maxWidth: "300px", lineHeight: 1.8 }}
-            >
+    <footer className="bg-gray-900 text-white pt-24 pb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+          <div className="space-y-6">
+            <Link href="/" className="inline-block">
+              <span className="text-2xl font-black tracking-tighter">
+                VECTRA
+              </span>
+            </Link>
+            <p className="text-gray-400 leading-relaxed font-medium max-w-xs">
               Take control of your financial future with Vectra. The most
               intuitive way to track your expenses and income on the go.
-            </Typography>
-            <Stack direction="row" spacing={1} sx={{ mt: 3 }}>
+            </p>
+            <div className="flex gap-4">
               {[
-                { icon: <FacebookIcon />, key: "fb" },
-                { icon: <TwitterIcon />, key: "tw" },
-                { icon: <LinkedInIcon />, key: "li" },
-                { icon: <InstagramIcon />, key: "ig" },
+                { icon: Facebook, key: "fb" },
+                { icon: Twitter, key: "tw" },
+                { icon: Linkedin, key: "li" },
+                { icon: Instagram, key: "ig" },
               ].map((item) => (
-                <IconButton
+                <Link
                   key={item.key}
-                  size="small"
-                  sx={{
-                    color: "inherit",
-                    opacity: 0.8,
-                    "&:hover": { opacity: 1 },
-                  }}
-                >
-                  {item.icon}
-                </IconButton>
-              ))}
-            </Stack>
-          </Grid>
-          <Grid size={{ xs: 6, md: 2 }}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2 }}>
-              Product
-            </Typography>
-            <Stack spacing={1}>
-              {["Features", "Integrations", "Pricing", "Changelog"].map(
-                (text) => (
-                  <MuiLink
-                    key={text}
-                    component={Link}
-                    href="#"
-                    color="inherit"
-                    underline="none"
-                    sx={{ opacity: 0.7, "&:hover": { opacity: 1 } }}
-                  >
-                    {text}
-                  </MuiLink>
-                ),
-              )}
-            </Stack>
-          </Grid>
-          <Grid size={{ xs: 6, md: 2 }}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2 }}>
-              Company
-            </Typography>
-            <Stack spacing={1}>
-              {["About Us", "Contact", "Careers", "Legal"].map((text) => (
-                <MuiLink
-                  key={text}
-                  component={Link}
                   href="#"
-                  color="inherit"
-                  underline="none"
-                  sx={{ opacity: 0.7, "&:hover": { opacity: 1 } }}
+                  className="w-10 h-10 rounded-xl bg-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-emerald-600 transition-all duration-300"
                 >
-                  {text}
-                </MuiLink>
+                  <item.icon size={20} />
+                </Link>
               ))}
-            </Stack>
-          </Grid>
-          <Grid size={{ xs: 12, md: 4 }}>
-            <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2 }}>
-              Newsletter
-            </Typography>
-            <Typography variant="body2" sx={{ opacity: 0.7, mb: 2 }}>
+            </div>
+          </div>
+
+          {Object.entries(footerLinks).map(([category, links]) => (
+            <div key={category}>
+              <h4 className="text-lg font-bold mb-6">{category}</h4>
+              <ul className="space-y-4">
+                {links.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-gray-400 hover:text-white transition-colors font-medium"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          <div className="space-y-6">
+            <h4 className="text-lg font-bold">Newsletter</h4>
+            <p className="text-gray-400 font-medium">
               Subscribe to get the latest updates on personal finance
               management.
-            </Typography>
-            {/* Simple newsletter placeholder */}
-            <Typography
-              variant="caption"
-              sx={{ fontStyle: "italic", opacity: 0.5 }}
-            >
+            </p>
+            <div className="flex bg-gray-800 rounded-2xl p-1.5 border border-gray-700 focus-within:ring-2 focus-within:ring-emerald-500 transition-all">
+              <input
+                type="email"
+                placeholder="Email address"
+                className="bg-transparent border-none focus:ring-0 px-4 py-2 w-full text-sm font-medium outline-none"
+              />
+              <button className="bg-emerald-600 px-4 py-2 rounded-xl text-sm font-black hover:bg-emerald-700 transition-colors">
+                Join
+              </button>
+            </div>
+            <p className="text-[10px] text-gray-500 italic mt-4">
               Powered by Corban Technologies LTD
-            </Typography>
-          </Grid>
-        </Grid>
-        <Divider sx={{ backgroundColor: "rgba(255,255,255,0.1)", mb: 4 }} />
-        <Box sx={{ textAlign: "center", opacity: 0.6 }}>
-          <Typography variant="caption">
-            © {currentYear} Corban Technologies LTD. All rights reserved.
-          </Typography>
-        </Box>
-      </Container>
-    </Box>
+            </p>
+          </div>
+        </div>
+
+        <div className="pt-8 border-t border-gray-800 text-center text-gray-500 text-sm font-medium">
+          <p>© {currentYear} Corban Technologies LTD. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
   );
 }

@@ -1,116 +1,77 @@
 "use client";
 
 import React from "react";
-import {
-  Box,
-  Container,
-  Typography,
-  Grid,
-  Card,
-  CardContent,
-} from "@mui/material";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import PieChartIcon from "@mui/icons-material/PieChart";
-import CategoryIcon from "@mui/icons-material/Category";
-import GroupsIcon from "@mui/icons-material/Groups";
+import { Wallet, PieChart, LayoutGrid, Users } from "lucide-react";
 
 const features = [
   {
     title: "Expense Tracking",
     description:
       "Easily log every transaction and keep your finances organized in real-time.",
-    icon: <AccountBalanceWalletIcon sx={{ fontSize: 40 }} />,
+    icon: Wallet,
+    color: "bg-emerald-50 text-emerald-600",
   },
   {
     title: "Insightful Analytics",
     description:
       "Visualize your spending patterns with beautiful charts and actionable data.",
-    icon: <PieChartIcon sx={{ fontSize: 40 }} />,
+    icon: PieChart,
+    color: "bg-indigo-50 text-indigo-600",
   },
   {
     title: "Smart Categories",
     description:
       "Organize items using Kategoria and Semikategoria for precise tracking.",
-    icon: <CategoryIcon sx={{ fontSize: 40 }} />,
+    icon: LayoutGrid,
+    color: "bg-amber-50 text-amber-600",
   },
   {
     title: "Shared Expenses",
     description:
       "Collaborate with family or business partners to manage shared budgets.",
-    icon: <GroupsIcon sx={{ fontSize: 40 }} />,
+    icon: Users,
+    color: "bg-rose-50 text-rose-600",
   },
 ];
 
 export default function Features() {
   return (
-    <Box
-      id="features"
-      sx={{ py: { xs: 10, md: 15 }, backgroundColor: "#eef7f1" }}
-    >
-      <Container maxWidth="lg">
-        <Box sx={{ textAlign: "center", mb: 8 }}>
-          <Typography
-            variant="h2"
-            sx={{
-              fontSize: { xs: "2rem", md: "3rem" },
-              fontWeight: 800,
-              mb: 2,
-            }}
-          >
+    <section id="features" className="py-24 bg-gray-50/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16 max-w-2xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight">
             Master Your Money
-          </Typography>
-          <Typography
-            variant="h6"
-            color="text.secondary"
-            sx={{ maxWidth: "700px", mx: "auto" }}
-          >
+          </h2>
+          <p className="text-lg text-gray-500 font-medium">
             Powerful features designed to give you a clear picture of where your
             money goes.
-          </Typography>
-        </Box>
+          </p>
+        </div>
 
-        <Grid container spacing={4}>
-          {features.map((feature, index) => (
-            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={index}>
-              <Card
-                elevation={0}
-                sx={{
-                  height: "100%",
-                  textAlign: "center",
-                  p: 2,
-                  borderRadius: 4,
-                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                  "&:hover": {
-                    transform: "translateY(-8px)",
-                    boxShadow: "0 12px 24px rgba(0,0,0,0.05)",
-                  },
-                }}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {features.map((feature, index) => {
+            const Icon = feature.icon;
+            return (
+              <div
+                key={index}
+                className="group p-8 bg-white rounded-[2.5rem] border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-gray-200/50 hover:-translate-y-2 transition-all duration-300"
               >
-                <CardContent>
-                  <Box
-                    sx={{
-                      display: "inline-flex",
-                      p: 2,
-                      borderRadius: 3,
-                      backgroundColor: "rgba(150, 186, 148, 0.2)",
-                      color: "#357252",
-                      mb: 3,
-                    }}
-                  >
-                    {feature.icon}
-                  </Box>
-                  <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
-                    {feature.title}
-                  </Typography>
-                  <Typography color="text.secondary">
-                    {feature.description}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-    </Box>
+                <div
+                  className={`w-16 h-16 rounded-2xl ${feature.color} flex items-center justify-center mb-6 transition-transform group-hover:scale-110 duration-500`}
+                >
+                  <Icon size={32} />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-emerald-600 transition-colors">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-500 leading-relaxed font-medium">
+                  {feature.description}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
   );
 }

@@ -76,7 +76,7 @@ export default function DashboardHeader() {
               <Bell size={20} />
             </button>
             <button
-              onClick={() => signOut({ callbackUrl: "/auth/login" })}
+              onClick={() => signOut({ callbackUrl: "/login" })}
               className="hidden sm:flex p-2.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all duration-200 group"
               title="Sign Out"
             >
@@ -147,7 +147,7 @@ export default function DashboardHeader() {
             <button
               onClick={() => {
                 setIsMenuOpen(false);
-                signOut({ callbackUrl: "/auth/login" });
+                signOut({ callbackUrl: "/login" });
               }}
               className="flex items-center gap-3 w-full px-4 py-3.5 rounded-2xl text-base font-bold text-red-600 hover:bg-red-50 transition-all duration-200"
             >
