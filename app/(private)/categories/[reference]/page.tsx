@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import TransactionList from "@/components/dashboard/TransactionList";
+import LoadingSpinner from "@/components/general/LoadingSpinner";
 import {
   Dialog,
   DialogContent,
@@ -43,18 +44,7 @@ export default function CategoryDetailPage() {
   );
 
   if (loadingKat || loadingTrans) {
-    return (
-      <div className="space-y-8 animate-pulse">
-        <div className="h-10 w-64 bg-gray-200 rounded-md" />
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6">
-            <div className="h-40 bg-white rounded-3xl border border-gray-100" />
-            <div className="h-96 bg-white rounded-3xl border border-gray-100" />
-          </div>
-          <div className="h-80 bg-white rounded-3xl border border-gray-100" />
-        </div>
-      </div>
-    );
+    return <LoadingSpinner fullPage text="Fetching category details..." />;
   }
 
   if (!kategoria) return null;

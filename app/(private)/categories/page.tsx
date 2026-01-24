@@ -4,24 +4,13 @@ import React from "react";
 import { useFetchKategorias } from "@/hooks/kategoria/actions";
 import { ChevronRight, Plus, Folder } from "lucide-react";
 import Link from "next/link";
+import LoadingSpinner from "@/components/general/LoadingSpinner";
 
 export default function CategoriesPage() {
   const { data: kategorias = [], isLoading } = useFetchKategorias();
 
   if (isLoading) {
-    return (
-      <div className="space-y-6">
-        <div className="h-10 w-48 bg-gray-200 animate-pulse rounded-md" />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div
-              key={i}
-              className="h-40 w-full bg-white border border-gray-100 animate-pulse rounded-2xl shadow-sm"
-            />
-          ))}
-        </div>
-      </div>
-    );
+    return <LoadingSpinner fullPage text="Loading categories..." />;
   }
 
   return (

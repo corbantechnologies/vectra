@@ -69,11 +69,11 @@ export default function SummaryCards({
           <CardContent sx={{ p: 4 }}>
             <Typography
               variant="overline"
-              sx={{ fontWeight: 800, opacity: 0.8, letterSpacing: 1.5 }}
+              sx={{ fontWeight: 400, opacity: 0.8, letterSpacing: 1.5 }}
             >
               Net Balance
             </Typography>
-            <Typography variant="h3" sx={{ fontWeight: 900, mt: 1, mb: 0.5 }}>
+            <Typography variant="h3" sx={{ fontWeight: 600, mt: 1, mb: 0.5 }}>
               {balance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
             </Typography>
           </CardContent>
@@ -111,7 +111,7 @@ export default function SummaryCards({
               <Typography
                 variant="overline"
                 sx={{
-                  fontWeight: 800,
+                  fontWeight: 400,
                   color: "text.secondary",
                   letterSpacing: 1.5,
                 }}
@@ -119,7 +119,7 @@ export default function SummaryCards({
                 Total Income
               </Typography>
             </Stack>
-            <Typography variant="h4" sx={{ fontWeight: 900, color: "#357252" }}>
+            <Typography variant="h4" sx={{ fontWeight: 600, color: "#357252" }}>
               {income.toLocaleString(undefined, { minimumFractionDigits: 2 })}
             </Typography>
           </CardContent>
@@ -157,7 +157,7 @@ export default function SummaryCards({
               <Typography
                 variant="overline"
                 sx={{
-                  fontWeight: 800,
+                  fontWeight: 400,
                   color: "text.secondary",
                   letterSpacing: 1.5,
                 }}
@@ -165,7 +165,7 @@ export default function SummaryCards({
                 Total Expenses
               </Typography>
             </Stack>
-            <Typography variant="h4" sx={{ fontWeight: 900, color: "#d32f2f" }}>
+            <Typography variant="h4" sx={{ fontWeight: 600, color: "#d32f2f" }}>
               {expenses.toLocaleString(undefined, { minimumFractionDigits: 2 })}
             </Typography>
           </CardContent>

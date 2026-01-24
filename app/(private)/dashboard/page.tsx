@@ -23,6 +23,7 @@ import CreateKategoria from "@/forms/kategoria/CreateKategoria";
 import CreateTransaction from "@/forms/transactions/CreateTransaction";
 import { Kategoria } from "@/services/kategoria";
 import { useFetchAccount } from "@/hooks/accounts/actions";
+import LoadingSpinner from "@/components/general/LoadingSpinner";
 
 export default function Dashboard() {
   const { data: user } = useFetchAccount();
@@ -74,6 +75,10 @@ export default function Dashboard() {
     handleOpenTransaction(k.reference);
   };
 
+  if (loadingKats || loadingTrans) {
+    return <LoadingSpinner fullPage text="Syncing your financial data..." />;
+  }
+
   return (
     <Stack spacing={4}>
       <Box
@@ -88,9 +93,7 @@ export default function Dashboard() {
             My Finances
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ mt: 0.5 }}>
-            {loadingKats || loadingTrans
-              ? "Loading your financial data..."
-              : `Hello ${user?.first_name || "there"}, welcome back to Vectra.`}
+            {`Hello ${user?.first_name || "there"}, welcome back to Vectra.`}
           </Typography>
         </Box>
 
