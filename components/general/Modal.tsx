@@ -57,7 +57,7 @@ export default function Modal({
       {/* Modal Card */}
       <div
         ref={modalRef}
-        className={`relative w-full ${maxWidthClasses[maxWidth]} bg-white border-2 border-gray-900 shadow-none overflow-hidden transform transition-all animate-in zoom-in-95 slide-in-from-bottom-4 duration-300`}
+        className={`relative w-full ${maxWidthClasses[maxWidth]} bg-white rounded shadow-xl border border-gray-100 overflow-hidden transform transition-all animate-in zoom-in-95 slide-in-from-bottom-4 duration-300`}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-50 bg-gray-50/50">

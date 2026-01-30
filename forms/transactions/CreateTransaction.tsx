@@ -84,15 +84,15 @@ export default function CreateTransaction({
   if (fetchingData) {
     return (
       <div className="flex justify-center items-center py-8">
-        <div className="animate-spin h-8 w-8 border-b-2 border-emerald-600"></div>
+        <div className="animate-spin h-8 w-8 border-b-2 border-emerald-600 rounded-full"></div>
       </div>
     );
   }
 
   const inputClasses =
-    "w-full px-3 py-3 border border-gray-400 focus:border-emerald-700 outline-none transition-colors text-sm bg-white text-gray-900 font-medium";
-  const labelClasses = "block text-xs font-bold text-gray-800 uppercase tracking-widest mb-1.5";
-  const errorClasses = "text-xs text-red-600 mt-1 font-mono font-bold";
+    "w-full px-4 py-3 border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-colors text-sm bg-white text-gray-900";
+  const labelClasses = "block text-xs font-semibold text-gray-700 mb-1.5";
+  const errorClasses = "text-xs text-red-500 mt-1 font-medium";
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -101,13 +101,13 @@ export default function CreateTransaction({
         name="transaction_type"
         control={control}
         render={({ field }) => (
-          <div className="flex border-2 border-gray-800">
+          <div className="flex bg-gray-100 p-1 rounded">
             <button
               type="button"
               onClick={() => field.onChange("EXP")}
-              className={`flex-1 py-3 text-sm font-black uppercase tracking-widest transition-all ${field.value === "EXP"
-                  ? "bg-gray-900 text-white"
-                  : "bg-white text-gray-400 hover:text-gray-900"
+              className={`flex-1 py-2 text-sm font-bold rounded transition-all ${field.value === "EXP"
+                ? "bg-white text-red-600 shadow-sm"
+                : "text-gray-500 hover:text-gray-700"
                 }`}
             >
               Expense
@@ -115,9 +115,9 @@ export default function CreateTransaction({
             <button
               type="button"
               onClick={() => field.onChange("IN")}
-              className={`flex-1 py-3 text-sm font-black uppercase tracking-widest transition-all border-l-2 border-gray-800 ${field.value === "IN"
-                  ? "bg-emerald-700 text-white"
-                  : "bg-white text-gray-400 hover:text-emerald-700"
+              className={`flex-1 py-2 text-sm font-bold rounded transition-all ${field.value === "IN"
+                ? "bg-white text-emerald-600 shadow-sm"
+                : "text-gray-500 hover:text-gray-700"
                 }`}
             >
               Income
@@ -132,7 +132,7 @@ export default function CreateTransaction({
           Amount
         </label>
         <div className="relative">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-mono font-bold text-xl">
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-xl">
             KES
           </span>
           <input
@@ -141,14 +141,14 @@ export default function CreateTransaction({
             step="0.01"
             placeholder="0.00"
             {...register("amount")}
-            className="w-full pl-16 pr-4 py-6 text-4xl font-mono font-bold border-b-4 border-gray-200 focus:border-emerald-700 outline-none text-gray-900 placeholder-gray-200 transition-colors bg-transparent"
+            className="w-full pl-16 pr-4 py-4 text-3xl font-bold border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none text-gray-900 placeholder-gray-300 transition-colors text-left"
             autoFocus
           />
         </div>
-        {errors.amount && <p className={errorClasses}>{errors.amount.message}</p>}
+        {errors.amount && <p className="text-left text-xs text-red-500 mt-1 font-medium">{errors.amount.message}</p>}
       </div>
 
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-2 gap-4">
         {/* Date Input */}
         <div>
           <label htmlFor="date" className={labelClasses}>
@@ -234,7 +234,7 @@ export default function CreateTransaction({
           <button
             type="button"
             onClick={onCancel}
-            className="flex-1 py-4 px-4 border-2 border-gray-200 text-gray-500 font-black uppercase tracking-widest hover:border-gray-900 hover:text-gray-900 transition-all text-xs"
+            className="flex-1 py-3 px-4 bg-gray-100 text-gray-700 font-bold rounded hover:bg-gray-200 transition-colors text-sm"
           >
             Cancel
           </button>
@@ -242,10 +242,10 @@ export default function CreateTransaction({
         <button
           type="submit"
           disabled={loading}
-          className="flex-1 py-4 px-4 bg-emerald-700 text-white font-black uppercase tracking-widest hover:bg-emerald-800 transition-all text-xs flex items-center justify-center"
+          className="flex-1 py-3 px-4 bg-emerald-600 text-white font-bold rounded hover:bg-emerald-700 shadow-sm hover:shadow transition-all text-sm flex items-center justify-center"
         >
           {loading ? (
-            <div className="animate-spin h-4 w-4 border-2 border-white/30 border-t-white"></div>
+            <div className="animate-spin h-4 w-4 border-2 border-white/30 border-t-white rounded-full"></div>
           ) : (
             "Save Record"
           )}

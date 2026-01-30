@@ -76,7 +76,7 @@ export default function CategoryDetailPage() {
                 {kategoria.name}
               </h1>
               <div className="flex items-center gap-3">
-                <span className="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-black uppercase tracking-widest border border-emerald-100">
+                <span className="px-3 py-1 bg-emerald-50 text-emerald-600 rounded text-xs font-black uppercase tracking-widest border border-emerald-100">
                   {kategoria.is_shared ? "Shared" : "Personal"}
                 </span>
                 <span className="text-gray-400 text-sm font-bold flex items-center gap-1">
@@ -156,7 +156,7 @@ export default function CategoryDetailPage() {
                         Active
                       </span>
                     </div>
-                    <div className="h-8 w-8 rounded-lg bg-white border border-gray-100 flex items-center justify-center text-gray-300 group-hover:text-emerald-500 transition-colors shadow-sm">
+                    <div className="h-8 w-8 rounded bg-white border border-gray-100 flex items-center justify-center text-gray-300 group-hover:text-emerald-500 transition-colors shadow-sm">
                       <ListOrdered size={14} />
                     </div>
                   </div>

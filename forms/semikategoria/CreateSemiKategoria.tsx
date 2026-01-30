@@ -47,7 +47,7 @@ export default function CreateSemiKategoria({
     } catch (error: any) {
       toast.error(
         error.response?.data?.message ||
-          "Failed to create subcategory. Please try again.",
+        "Failed to create subcategory. Please try again.",
       );
     } finally {
       setLoading(false);
@@ -55,7 +55,7 @@ export default function CreateSemiKategoria({
   };
 
   const inputClasses =
-    "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200 bg-white text-gray-900";
+    "w-full px-4 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200 bg-white text-gray-900";
   const labelClasses = "block text-sm font-semibold text-gray-700 mb-1";
   const errorClasses = "text-xs text-red-500 mt-1 font-medium";
 
@@ -82,7 +82,7 @@ export default function CreateSemiKategoria({
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 px-4 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+          className="w-full py-3 px-4 bg-emerald-600 text-white font-bold rounded hover:bg-emerald-700 shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
         >
           {loading ? (
             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>

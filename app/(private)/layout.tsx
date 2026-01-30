@@ -7,7 +7,7 @@ export default function PrivateLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col min-h-screen bg-[#d3d3d3]">
+    <div className="flex flex-col min-h-screen bg-white">
       {/* Top Header */}
       <DashboardHeader />
 

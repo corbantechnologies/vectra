@@ -36,8 +36,3 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
-
-/* Enforce Squared / Financial Look */
-*, *::before, *::after {
-  border-radius: 0 !important;
-}
