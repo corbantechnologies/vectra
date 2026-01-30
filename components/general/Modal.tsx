@@ -57,7 +57,7 @@ export default function Modal({
       {/* Modal Card */}
       <div
         ref={modalRef}
-        className={`relative w-full ${maxWidthClasses[maxWidth]} bg-white rounded-[2rem] shadow-2xl shadow-gray-200/50 border border-gray-100 overflow-hidden transform transition-all animate-in zoom-in-95 slide-in-from-bottom-4 duration-300`}
+        className={`relative w-full ${maxWidthClasses[maxWidth]} bg-white rounded shadow-xl border border-gray-100 overflow-hidden transform transition-all animate-in zoom-in-95 slide-in-from-bottom-4 duration-300`}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-50 bg-gray-50/50">
@@ -66,7 +66,7 @@ export default function Modal({
           </h3>
           <button
             onClick={onClose}
-            className="p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all duration-200"
+            className="p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded transition-all duration-200"
           >
             <X size={20} />
           </button>

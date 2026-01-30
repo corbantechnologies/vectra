@@ -45,7 +45,7 @@ export default function Footer() {
                 <Link
                   key={item.key}
                   href="#"
-                  className="w-10 h-10 rounded-xl bg-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-emerald-600 transition-all duration-300"
+                  className="w-10 h-10 rounded bg-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-emerald-600 transition-all duration-300"
                 >
                   <item.icon size={20} />
                 </Link>
@@ -77,13 +77,13 @@ export default function Footer() {
               Subscribe to get the latest updates on personal finance
               management.
             </p>
-            <div className="flex bg-gray-800 rounded-2xl p-1.5 border border-gray-700 focus-within:ring-2 focus-within:ring-emerald-500 transition-all">
+            <div className="flex bg-gray-800 rounded p-1.5 border border-gray-700 focus-within:ring-2 focus-within:ring-emerald-500 transition-all">
               <input
                 type="email"
                 placeholder="Email address"
                 className="bg-transparent border-none focus:ring-0 px-4 py-2 w-full text-sm font-medium outline-none"
               />
-              <button className="bg-emerald-600 px-4 py-2 rounded-xl text-sm font-black hover:bg-emerald-700 transition-colors">
+              <button className="bg-emerald-600 px-4 py-2 rounded text-sm font-black hover:bg-emerald-700 transition-colors">
                 Join
               </button>
             </div>

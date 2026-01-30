@@ -26,7 +26,7 @@ export default function LoadingSpinner({
   return (
     <div className={containerClasses}>
       <div
-        className={`${sizeClasses[size]} animate-spin rounded-full border-gray-100 border-t-emerald-600`}
+        className={`${sizeClasses[size]} animate-spin rounded border-gray-100 border-t-emerald-600`}
       ></div>
       {text && (
         <p className="mt-4 text-sm font-bold text-gray-500 uppercase tracking-widest animate-pulse">

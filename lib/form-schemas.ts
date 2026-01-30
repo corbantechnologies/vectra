@@ -16,7 +16,7 @@ export type SemiKategoriaFormValues = z.infer<typeof semikategoriaSchema>;
 
 export const transactionSchema = z.object({
   transaction_type: z.enum(["IN", "EXP"]),
-  transaction_method: z.enum(["CASH", "CARD"]),
+  transaction_method: z.enum(["CASH", "CARD", "MPESA", "CHEQUE", "TRANSFER"]),
   amount: z.string().min(1, "Amount is required").refine(val => !isNaN(Number(val)) && Number(val) > 0, "Amount must be a positive number"),
   date: z.string().min(1, "Date is required"),
   kategoria: z.string().min(1, "Category is required"), // reference
