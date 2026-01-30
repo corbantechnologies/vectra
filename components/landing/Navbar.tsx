@@ -23,17 +23,16 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
-        scrolled
-          ? "bg-white/90 backdrop-blur-xl border-b border-gray-100 py-3 shadow-sm"
-          : "bg-transparent py-5"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${scrolled
+        ? "bg-white/90 backdrop-blur-xl border-b border-gray-100 py-3 shadow-sm"
+        : "bg-transparent py-5"
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-emerald-200 group-hover:scale-110 transition-transform duration-300">
+            <div className="w-10 h-10 bg-emerald-600 rounded flex items-center justify-center text-white font-black text-xl shadow-lg shadow-emerald-200 group-hover:scale-110 transition-transform duration-300">
               V
             </div>
             <span className="text-2xl font-black tracking-tighter bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
@@ -47,7 +46,7 @@ export default function Navbar() {
               <Link
                 key={item.label}
                 href={item.href}
-                className="px-5 py-2 text-sm font-bold text-gray-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all"
+                className="px-5 py-2 text-sm font-bold text-gray-500 hover:text-emerald-600 hover:bg-emerald-50 rounded transition-all"
               >
                 {item.label}
               </Link>
@@ -61,7 +60,7 @@ export default function Navbar() {
             </Link>
             <Link
               href="/signup"
-              className="px-6 py-2.5 bg-emerald-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-emerald-200 hover:bg-emerald-700 hover:-translate-y-0.5 transition-all active:scale-95"
+              className="px-6 py-2.5 bg-emerald-600 text-white text-sm font-bold rounded shadow-lg shadow-emerald-200 hover:bg-emerald-700 hover:-translate-y-0.5 transition-all active:scale-95"
             >
               Get Started
             </Link>
@@ -70,7 +69,7 @@ export default function Navbar() {
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all"
+            className="md:hidden p-2 text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 rounded transition-all"
           >
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -86,7 +85,7 @@ export default function Navbar() {
                 key={item.label}
                 href={item.href}
                 onClick={() => setMobileOpen(false)}
-                className="block px-6 py-4 text-lg font-bold text-gray-600 hover:bg-emerald-50 hover:text-emerald-600 rounded-2xl transition-all"
+                className="block px-6 py-4 text-lg font-bold text-gray-600 hover:bg-emerald-50 hover:text-emerald-600 rounded transition-all"
               >
                 {item.label}
               </Link>
@@ -95,14 +94,14 @@ export default function Navbar() {
             <Link
               href="/login"
               onClick={() => setMobileOpen(false)}
-              className="block px-6 py-4 text-lg font-bold text-gray-600 hover:bg-emerald-50 hover:text-emerald-600 rounded-2xl"
+              className="block px-6 py-4 text-lg font-bold text-gray-600 hover:bg-emerald-50 hover:text-emerald-600 rounded"
             >
               Log In
             </Link>
             <Link
               href="/signup"
               onClick={() => setMobileOpen(false)}
-              className="block w-full px-6 py-4 bg-emerald-600 text-white text-center text-lg font-bold rounded-2xl shadow-xl shadow-emerald-100"
+              className="block w-full px-6 py-4 bg-emerald-600 text-white text-center text-lg font-bold rounded shadow-xl shadow-emerald-100"
             >
               Get Started for Free
             </Link>

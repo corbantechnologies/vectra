@@ -35,7 +35,7 @@ export default function TransactionList({
     return (
       <div className="space-y-4">
         <div className="h-8 w-48 bg-gray-200 animate-pulse rounded-md" />
-        <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
+        <div className="bg-white border border-gray-100 rounded overflow-hidden shadow-sm">
           <div className="p-4 space-y-3">
             {[1, 2, 3, 4, 5].map((i) => (
               <div
@@ -107,7 +107,7 @@ export default function TransactionList({
                     >
                       <td className="px-6 py-4">
                         <div
-                          className={`h-9 w-9 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 ${isExpense
+                          className={`h-9 w-9 rounded flex items-center justify-center transition-transform group-hover:scale-110 ${isExpense
                             ? "text-red-600 bg-red-50"
                             : "text-emerald-600 bg-emerald-50"
                             }`}
@@ -172,7 +172,7 @@ export default function TransactionList({
                     setCurrentPage((prev) => Math.max(prev - 1, 1))
                   }
                   disabled={currentPage === 1}
-                  className="p-2 rounded-xl border border-gray-200 bg-white text-gray-500 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-50 hover:text-emerald-600 hover:border-emerald-200 transition-all active:scale-95"
+                  className="p-2 rounded border border-gray-200 bg-white text-gray-500 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-50 hover:text-emerald-600 hover:border-emerald-200 transition-all active:scale-95"
                 >
                   <ChevronLeft size={16} />
                 </button>
@@ -181,7 +181,7 @@ export default function TransactionList({
                     setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                   }
                   disabled={currentPage === totalPages}
-                  className="p-2 rounded-xl border border-gray-200 bg-white text-gray-500 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-50 hover:text-emerald-600 hover:border-emerald-200 transition-all active:scale-95"
+                  className="p-2 rounded border border-gray-200 bg-white text-gray-500 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-50 hover:text-emerald-600 hover:border-emerald-200 transition-all active:scale-95"
                 >
                   <ChevronRight size={16} />
                 </button>

@@ -77,7 +77,7 @@ export default function UpdateTransaction({
   if (fetchingData) {
     return (
       <div className="flex justify-center items-center py-8">
-        <div className="animate-spin h-8 w-8 border-b-2 border-emerald-600 rounded-full"></div>
+        <div className="animate-spin h-8 w-8 border-b-2 border-emerald-600 rounded"></div>
       </div>
     );
   }
@@ -134,7 +134,7 @@ export default function UpdateTransaction({
             step="0.01"
             placeholder="0.00"
             {...register("amount")}
-            className="w-full pl-16 pr-4 py-4 text-3xl font-bold border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none text-gray-900 placeholder-gray-300 transition-colors text-left"
+            className="w-full pl-16 pr-4 py-4 text-3xl font-bold border border-gray-200 rounded focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none text-gray-900 placeholder-gray-300 transition-colors text-left"
           />
         </div>
         {errors.amount && <p className="text-left text-xs text-red-500 mt-1 font-medium">{errors.amount.message}</p>}
@@ -237,7 +237,7 @@ export default function UpdateTransaction({
           className="flex-1 py-3 px-4 bg-emerald-600 text-white font-bold rounded hover:bg-emerald-700 shadow-sm hover:shadow transition-all text-sm flex items-center justify-center"
         >
           {loading ? (
-            <div className="animate-spin h-4 w-4 border-2 border-white/30 border-t-white rounded-full"></div>
+            <div className="animate-spin h-4 w-4 border-2 border-white/30 border-t-white rounded"></div>
           ) : (
             "Update Record"
           )}

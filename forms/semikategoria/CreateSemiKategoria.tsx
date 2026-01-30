@@ -85,7 +85,7 @@ export default function CreateSemiKategoria({
           className="w-full py-3 px-4 bg-emerald-600 text-white font-bold rounded hover:bg-emerald-700 shadow-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
         >
           {loading ? (
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+            <div className="animate-spin rounded h-5 w-5 border-b-2 border-white"></div>
           ) : (
             "Create Subcategory"
           )}

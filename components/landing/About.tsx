@@ -19,8 +19,8 @@ export default function About() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
-            <div className="flex gap-6 p-6 rounded-3xl bg-gray-50 border border-gray-100 transform hover:scale-[1.02] transition-all duration-300 shadow-sm hover:shadow-md">
-              <div className="w-14 h-14 rounded-2xl bg-emerald-600 flex items-center justify-center text-white shrink-0 shadow-lg shadow-emerald-200">
+            <div className="flex gap-6 p-6 rounded bg-gray-50 border border-gray-100 transform hover:scale-[1.02] transition-all duration-300 shadow-sm hover:shadow-md">
+              <div className="w-14 h-14 rounded bg-emerald-600 flex items-center justify-center text-white shrink-0 shadow-lg shadow-emerald-200">
                 <Target size={28} />
               </div>
               <div>
@@ -34,8 +34,8 @@ export default function About() {
               </div>
             </div>
 
-            <div className="flex gap-6 p-6 rounded-3xl bg-gray-50 border border-gray-100 transform hover:scale-[1.02] transition-all duration-300 shadow-sm hover:shadow-md">
-              <div className="w-14 h-14 rounded-2xl bg-emerald-600 flex items-center justify-center text-white shrink-0 shadow-lg shadow-emerald-200">
+            <div className="flex gap-6 p-6 rounded bg-gray-50 border border-gray-100 transform hover:scale-[1.02] transition-all duration-300 shadow-sm hover:shadow-md">
+              <div className="w-14 h-14 rounded bg-emerald-600 flex items-center justify-center text-white shrink-0 shadow-lg shadow-emerald-200">
                 <Shield size={28} />
               </div>
               <div>
@@ -50,8 +50,8 @@ export default function About() {
               </div>
             </div>
 
-            <div className="flex gap-6 p-6 rounded-3xl bg-gray-50 border border-gray-100 transform hover:scale-[1.02] transition-all duration-300 shadow-sm hover:shadow-md">
-              <div className="w-14 h-14 rounded-2xl bg-emerald-600 flex items-center justify-center text-white shrink-0 shadow-lg shadow-emerald-200">
+            <div className="flex gap-6 p-6 rounded bg-gray-50 border border-gray-100 transform hover:scale-[1.02] transition-all duration-300 shadow-sm hover:shadow-md">
+              <div className="w-14 h-14 rounded bg-emerald-600 flex items-center justify-center text-white shrink-0 shadow-lg shadow-emerald-200">
                 <Users size={28} />
               </div>
               <div>
@@ -67,8 +67,8 @@ export default function About() {
           </div>
 
           <div className="relative group">
-            <div className="absolute -inset-4 bg-emerald-600/5 rounded-[3rem] blur-2xl group-hover:bg-emerald-600/10 transition-colors duration-500" />
-            <div className="relative aspect-square md:aspect-auto md:h-[600px] w-full bg-emerald-900 rounded-[3rem] p-12 overflow-hidden flex flex-col justify-end shadow-2xl">
+            <div className="absolute -inset-4 bg-emerald-600/5 rounded blur-2xl group-hover:bg-emerald-600/10 transition-colors duration-500" />
+            <div className="relative aspect-square md:aspect-auto md:h-[600px] w-full bg-emerald-900 rounded p-12 overflow-hidden flex flex-col justify-end shadow-2xl">
               <div className="absolute top-0 right-0 p-12 text-white/5 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
                 <Info size={400} />
               </div>

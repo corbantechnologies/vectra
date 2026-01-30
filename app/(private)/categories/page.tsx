@@ -13,7 +13,7 @@ export default function CategoriesPage() {
   if (isLoading) {
     return (
       <div className="flex h-[50vh] items-center justify-center">
-        <div className="animate-spin h-8 w-8 border-2 border-emerald-600 border-t-transparent rounded-full"></div>
+        <div className="animate-spin h-8 w-8 border-2 border-emerald-600 border-t-transparent rounded"></div>
       </div>
     )
   }

@@ -119,7 +119,7 @@ export default function Dashboard() {
           ))}
         </div>
 
-        <div className="bg-white border border-gray-200 rounded-2xl shadow-sm">
+        <div className="bg-white border border-gray-200 rounded shadow-sm">
           <TransactionList transactions={filteredTransactions.slice(0, 15)} />
           {filteredTransactions.length > 15 && (
             <div className="p-4 text-center border-t border-gray-100">
