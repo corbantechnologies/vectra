@@ -34,7 +34,7 @@ export default function TransactionList({
   if (loading) {
     return (
       <div className="space-y-4">
-        <div className="h-8 w-48 bg-gray-200 animate-pulse rounded-md" />
+        <div className="h-8 w-48 bg-gray-200 animate-pulse rounded" />
         <div className="bg-white border border-gray-100 rounded overflow-hidden shadow-sm">
           <div className="p-4 space-y-3">
             {[1, 2, 3, 4, 5].map((i) => (
@@ -130,7 +130,7 @@ export default function TransactionList({
                         </div>
                       </td>
                       <td className="px-6 py-4 hidden sm:table-cell">
-                        <span className="text-xs font-bold text-gray-500 bg-gray-50 px-2 py-1 rounded-md">
+                        <span className="text-xs font-bold text-gray-500 bg-gray-50 px-2 py-1 rounded">
                           {date}
                         </span>
                       </td>

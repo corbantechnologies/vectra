@@ -40,7 +40,7 @@ export default function DashboardHeader() {
         {/* Logo / Branding - Left Side */}
         <Link href="/dashboard" className="flex-shrink-0 z-50 flex items-center gap-2">
           <div className="h-8 w-8 bg-emerald-600 rounded flex items-center justify-center">
-            <div className="h-3 w-3 bg-white rounded-sm"></div>
+            <div className="h-3 w-3 bg-white rounded"></div>
           </div>
           <h1 className="text-xl font-bold tracking-tight text-gray-900 uppercase">
             VECTRA
