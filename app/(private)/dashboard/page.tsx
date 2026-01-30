@@ -166,6 +166,7 @@ export default function Dashboard() {
         maxWidth="sm"
       >
         <CreateSemiKategoria
+          kategoriaReference={activeTab !== "all" ? activeTab : ""}
           onSuccess={() => setOpenSemiKategoria(false)}
           onCancel={() => setOpenSemiKategoria(false)}
         />
