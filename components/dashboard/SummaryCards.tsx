@@ -51,7 +51,7 @@ export default function SummaryCards({
             height: "100%",
             bgcolor: "#357252",
             color: "#fff",
-            borderRadius: 6,
+            borderRadius: 0,
             position: "relative",
             overflow: "hidden",
             "&::after": {

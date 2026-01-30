@@ -54,7 +54,6 @@ export default function UpdateTransaction({
 
   // Reset subcategory if kategoria changes manually
   useEffect(() => {
-    // Only reset if it's not the initial value set by the transaction prop
     if (selectedKategoriaRef !== transaction.kategoria) {
       setValue("semikategoria", "");
     }
@@ -64,12 +63,11 @@ export default function UpdateTransaction({
     setLoading(true);
     try {
       await updateTransaction(data as any, header, transaction.reference);
-      toast.success("Transaction updated successfully!");
+      toast.success("Transaction updated!");
       if (onSuccess) onSuccess();
     } catch (error: any) {
       toast.error(
-        error.response?.data?.message ||
-          "Failed to update transaction. Please try again.",
+        error.response?.data?.message || "Failed to update transaction.",
       );
     } finally {
       setLoading(false);
@@ -79,57 +77,104 @@ export default function UpdateTransaction({
   if (fetchingData) {
     return (
       <div className="flex justify-center items-center py-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+        <div className="animate-spin h-8 w-8 border-b-2 border-emerald-600"></div>
       </div>
     );
   }
 
   const inputClasses =
-    "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200 bg-white text-gray-900";
-  const labelClasses = "block text-sm font-semibold text-gray-700 mb-1";
-  const errorClasses = "text-xs text-red-500 mt-1 font-medium";
+    "w-full px-3 py-3 border border-gray-400 focus:border-emerald-700 outline-none transition-colors text-sm bg-white text-gray-900 font-medium";
+  const labelClasses = "block text-xs font-bold text-gray-800 uppercase tracking-widest mb-1.5";
+  const errorClasses = "text-xs text-red-600 mt-1 font-mono font-bold";
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6 max-w-lg mx-auto p-4"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {/* Transaction Type Toggle */}
-      <div className="space-y-2">
-        <label className={labelClasses}>Transaction Type</label>
-        <Controller
-          name="transaction_type"
-          control={control}
-          render={({ field }) => (
-            <div className="flex p-1 bg-gray-100 rounded-xl space-x-1">
-              <button
-                type="button"
-                onClick={() => field.onChange("EXP")}
-                className={`flex-1 py-2 text-sm font-bold rounded-lg transition-all duration-200 ${
-                  field.value === "EXP"
-                    ? "bg-white text-red-600 shadow-sm"
-                    : "text-gray-500 hover:text-gray-700"
+      <Controller
+        name="transaction_type"
+        control={control}
+        render={({ field }) => (
+          <div className="flex border-2 border-gray-800">
+            <button
+              type="button"
+              onClick={() => field.onChange("EXP")}
+              className={`flex-1 py-3 text-sm font-black uppercase tracking-widest transition-all ${field.value === "EXP"
+                  ? "bg-gray-900 text-white"
+                  : "bg-white text-gray-400 hover:text-gray-900"
                 }`}
-              >
-                Expense
-              </button>
-              <button
-                type="button"
-                onClick={() => field.onChange("IN")}
-                className={`flex-1 py-2 text-sm font-bold rounded-lg transition-all duration-200 ${
-                  field.value === "IN"
-                    ? "bg-white text-emerald-600 shadow-sm"
-                    : "text-gray-500 hover:text-gray-700"
+            >
+              Expense
+            </button>
+            <button
+              type="button"
+              onClick={() => field.onChange("IN")}
+              className={`flex-1 py-3 text-sm font-black uppercase tracking-widest transition-all border-l-2 border-gray-800 ${field.value === "IN"
+                  ? "bg-emerald-700 text-white"
+                  : "bg-white text-gray-400 hover:text-emerald-700"
                 }`}
-              >
-                Income
-              </button>
-            </div>
-          )}
-        />
-        {errors.transaction_type && (
-          <p className={errorClasses}>{errors.transaction_type.message}</p>
+            >
+              Income
+            </button>
+          </div>
         )}
+      />
+
+      {/* Main Amount Input */}
+      <div>
+        <label htmlFor="amount" className="sr-only">
+          Amount
+        </label>
+        <div className="relative">
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-mono font-bold text-xl">
+            KES
+          </span>
+          <input
+            id="amount"
+            type="number"
+            step="0.01"
+            {...register("amount")}
+            className="w-full pl-16 pr-4 py-6 text-4xl font-mono font-bold border-b-4 border-gray-200 focus:border-emerald-700 outline-none text-gray-900 placeholder-gray-200 transition-colors bg-transparent"
+          />
+        </div>
+        {errors.amount && <p className={errorClasses}>{errors.amount.message}</p>}
+      </div>
+
+      <div className="grid grid-cols-2 gap-5">
+        {/* Date Input */}
+        <div>
+          <label htmlFor="date" className={labelClasses}>
+            Date
+          </label>
+          <input
+            id="date"
+            type="date"
+            {...register("date")}
+            className={inputClasses}
+          />
+          {errors.date && <p className={errorClasses}>{errors.date.message}</p>}
+        </div>
+
+        {/* Payment Method Select */}
+        <div>
+          <label htmlFor="method" className={labelClasses}>
+            Method
+          </label>
+          <select
+            id="method"
+            {...register("transaction_method")}
+            className={inputClasses}
+          >
+            <option value="" disabled>Select...</option>
+            <option value="CASH">Cash</option>
+            <option value="MPESA">M-Pesa</option>
+            <option value="CARD">Card</option>
+            <option value="CHEQUE">Cheque</option>
+            <option value="TRANSFER">Transfer</option>
+          </select>
+          {errors.transaction_method && (
+            <p className={errorClasses}>{errors.transaction_method.message}</p>
+          )}
+        </div>
       </div>
 
       {/* Category Select */}
@@ -140,7 +185,7 @@ export default function UpdateTransaction({
         <select
           id="kategoria"
           {...register("kategoria")}
-          className={`${inputClasses} ${errors.kategoria ? "border-red-500" : "border-gray-300"}`}
+          className={inputClasses}
         >
           {kategorias.map((k) => (
             <option key={k.reference} value={k.reference}>
@@ -153,68 +198,16 @@ export default function UpdateTransaction({
         )}
       </div>
 
-      {/* Amount Input */}
-      <div>
-        <label htmlFor="amount" className={labelClasses}>
-          Amount
-        </label>
-        <input
-          id="amount"
-          type="number"
-          step="0.01"
-          {...register("amount")}
-          className={`${inputClasses} ${errors.amount ? "border-red-500" : "border-gray-300"}`}
-        />
-        {errors.amount && (
-          <p className={errorClasses}>{errors.amount.message}</p>
-        )}
-      </div>
-
-      {/* Date Input */}
-      <div>
-        <label htmlFor="date" className={labelClasses}>
-          Date
-        </label>
-        <input
-          id="date"
-          type="date"
-          {...register("date")}
-          className={`${inputClasses} ${errors.date ? "border-red-500" : "border-gray-300"}`}
-        />
-        {errors.date && <p className={errorClasses}>{errors.date.message}</p>}
-      </div>
-
-      {/* Transaction Method Select */}
-      <div>
-        <label htmlFor="method" className={labelClasses}>
-          Payment Method
-        </label>
-        <select
-          id="method"
-          {...register("transaction_method")}
-          className={`${inputClasses} ${errors.transaction_method ? "border-red-500" : "border-gray-300"}`}
-        >
-          <option value="CASH">Cash</option>
-          <option value="MPESA">M-Pesa</option>
-          <option value="CARD">Card / Digital Payment</option>
-          <option value="CHEQUE">Cheque</option>
-          <option value="TRANSFER">Bank Transfer</option>
-        </select>
-        {errors.transaction_method && (
-          <p className={errorClasses}>{errors.transaction_method.message}</p>
-        )}
-      </div>
-
-      {/* Subcategory Select */}
+      {/* Subcategory Select (Conditional) */}
       {selectedKategoria && selectedKategoria.semikategorias.length > 0 && (
-        <div>
+        <div className="animate-in fade-in slide-in-from-top-1 duration-200">
           <label htmlFor="semikategoria" className={labelClasses}>
-            Subcategory (Optional)
+            Subcategory
           </label>
           <select
             id="semikategoria"
             {...register("semikategoria")}
-            className={`${inputClasses} ${errors.semikategoria ? "border-red-500" : "border-gray-300"}`}
+            className={inputClasses}
           >
             <option value="">None</option>
             {selectedKategoria.semikategorias.map((s) => (
@@ -223,20 +216,16 @@ export default function UpdateTransaction({
               </option>
             ))}
           </select>
-          {errors.semikategoria && (
-            <p className={errorClasses}>{errors.semikategoria.message}</p>
-          )}
         </div>
       )}
 
       {/* Action Buttons */}
-      <div className="flex gap-3 pt-2">
+      <div className="pt-4 flex gap-4">
         {onCancel && (
           <button
             type="button"
             onClick={onCancel}
-            disabled={loading}
-            className="flex-1 py-2 px-4 border border-gray-300 text-gray-700 font-bold rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
+            className="flex-1 py-4 px-4 border-2 border-gray-200 text-gray-500 font-black uppercase tracking-widest hover:border-gray-900 hover:text-gray-900 transition-all text-xs"
           >
             Cancel
           </button>
@@ -244,12 +233,13 @@ export default function UpdateTransaction({
         <button
           type="submit"
           disabled={loading}
-          className="flex-1 py-2 px-4 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-700 shadow-lg shadow-emerald-200/50 transition-all active:scale-95 disabled:opacity-50 flex justify-center items-center gap-2"
+          className="flex-1 py-4 px-4 bg-emerald-700 text-white font-black uppercase tracking-widest hover:bg-emerald-800 transition-all text-xs flex items-center justify-center"
         >
-          {loading && (
-            <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white"></div>
+          {loading ? (
+            <div className="animate-spin h-4 w-4 border-2 border-white/30 border-t-white"></div>
+          ) : (
+            "Update Record"
           )}
-          {loading ? "Updating..." : "Update Transaction"}
         </button>
       </div>
     </form>

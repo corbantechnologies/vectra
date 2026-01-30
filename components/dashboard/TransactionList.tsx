@@ -35,7 +35,7 @@ export default function TransactionList({
     return (
       <div className="space-y-4">
         <div className="h-8 w-48 bg-gray-200 animate-pulse rounded-md" />
-        <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
+        <div className="bg-white border border-gray-100 overflow-hidden shadow-sm">
           <div className="p-4 space-y-3">
             {[1, 2, 3, 4, 5].map((i) => (
               <div
@@ -107,11 +107,10 @@ export default function TransactionList({
                     >
                       <td className="px-6 py-4">
                         <div
-                          className={`h-9 w-9 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 ${
-                            isExpense
+                          className={`h-9 w-9 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110 ${isExpense
                               ? "text-red-600 bg-red-50"
                               : "text-emerald-600 bg-emerald-50"
-                          }`}
+                            }`}
                         >
                           {isExpense ? (
                             <ArrowDownLeft size={18} />
@@ -142,9 +141,8 @@ export default function TransactionList({
                       </td>
                       <td className="px-6 py-4 text-right">
                         <span
-                          className={`text-base font-black tabular-nums ${
-                            isExpense ? "text-red-600" : "text-emerald-600"
-                          }`}
+                          className={`text-base font-black tabular-nums ${isExpense ? "text-red-600" : "text-emerald-600"
+                            }`}
                         >
                           {isExpense ? "-" : "+"}
                           {parseFloat(transaction.amount).toLocaleString(
